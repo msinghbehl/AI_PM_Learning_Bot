@@ -1,0 +1,18 @@
+# Secrets
+.env
+token.json
+client_secret*.json
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+
+# Data
+data/*.db
