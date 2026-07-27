@@ -1,58 +1,44 @@
 # CREDITS — Knowledge Base Sources
 
-This curriculum was authored using a corpus of sources fed to an ingestion agent. The agent proposed concept nodes grounded in cited primary sources; Manmeet reviewed, edited, and committed the final curriculum. This file credits every source that contributed to the knowledge base.
+This curriculum was authored using a corpus of sources fed to an ingestion agent. The agent proposed concept nodes grounded in cited primary sources; Manmeet reviewed, edited, and committed the final curriculum. This file credits the openly-licensed and public-reference sources that shaped the curriculum.
 
-**Attribution principle:** every concept node in `curriculum/ai-technical-fluency.yaml` cites its primary sources directly (URL + anchor). This file is the higher-level credit roll — who created the materials that shaped the curriculum, and where to find them.
+**Attribution principle:** every concept node in `curriculum/ai-technical-fluency.yaml` cites its primary sources directly (URL + anchor). This file is the higher-level credit roll for sources whose licenses permit public attribution of their use. Sources read locally but not redistributed (LinkedIn posts, practitioner blog posts, course lessons) are not named here — they're recorded in the local `sources/` provenance only.
 
 ## Primary sources (model creators + cited research)
 
-These are the ground-truth sources the curriculum cites directly. Every concept node references ≥1 of these.
+These are the ground-truth sources the curriculum cites directly. Every concept node references ≥1 of these. All are public reference material or openly distributable.
 
 | Source | URL | License | Used for |
 |--------|-----|---------|----------|
-| Anthropic — Claude model family | https://www.anthropic.com/claude | Publisher ToS (reference) | Context windows, safety, tool use, model cards |
-| OpenAI — GPT-4 technical report | https://openai.com/research/gpt-4 | Publisher ToS (reference) | Training pipeline, evals, model card |
-| Google DeepMind — Gemini | https://deepmind.google/technologies/gemini/ | Publisher ToS (reference) | MoE architecture, long context, multimodal |
+| Anthropic — Claude model family | https://www.anthropic.com/claude | Public reference (publisher ToS) | Context windows, safety, tool use, model cards |
+| OpenAI — GPT-4 technical report | https://openai.com/research/gpt-4 | Public reference (publisher ToS) | Training pipeline, evals, model card |
+| Google DeepMind — Gemini | https://deepmind.google/technologies/gemini/ | Public reference (publisher ToS) | MoE architecture, long context, multimodal |
 | Vaswani et al. (2017) — "Attention Is All You Need" | https://arxiv.org/abs/1706.03762 | arXiv (public distribution) | Transformer architecture |
 | OpenAI (2022) — InstructGPT / RLHF paper | https://arxiv.org/abs/2203.02155 | arXiv (public distribution) | RLHF, alignment, training pipeline |
 | Karpathy — LLM Wiki gist | https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f | Shared openly by author for reuse | LLM Wiki pattern, knowledge compounding |
 
-## Secondary sources (practitioner-authored course material)
+## Openly-licensed secondary sources (GitHub repos)
 
-These supplemented the primary sources with depth, examples, and practitioner perspective. Not committed to the repo (not licensed for redistribution); the agent read them locally.
+These repos are MIT/Apache licensed and credited here. Their content was read locally by the ingestion agent; the repos themselves are publicly forkable.
 
-| Source | URL | Author | Used for |
-|--------|-----|--------|----------|
-| Generative AI Course | https://github.com/AbdullahAbuHassann/GenerativeAICourse | AbdullahAbuHassann | LLMs, prompt engineering, RAG, agents, MCP, fine-tuning, evaluation, LLMOps |
-| Generative AI for Beginners | https://github.com/microsoft/generative-ai-for-beginners | Microsoft | 18-lesson course — prompting, RAG, LLM fundamentals, agents, evals, responsible AI |
-| Agents Towards Production | https://github.com/NirDiamant/agents-towards-production | NirDiamant | Production agent patterns — guardrails, memory, multi-agent, observability, evaluation |
-| GPT-5.6 family analysis | https://simonwillison.net/2026/Jul/9/gpt-5-6/ | Simon Willison | Model report reading, context windows, cost economics |
-| AI PM Knowledge Store & Deep Multi-Hop Extraction Plan | (local synthesis doc) | Manmeet Singh Behl | Synthesis of LLM Wiki, RAG vs fine-tuning, frontier models, evals |
+| Source | URL | Author | License | Used for |
+|--------|-----|--------|---------|----------|
+| Generative AI Course | https://github.com/AbdullahAbuHassann/GenerativeAICourse | AbdullahAbuHassann | MIT | LLMs, prompt engineering, RAG, agents, MCP, fine-tuning, evaluation, LLMOps |
+| Generative AI for Beginners | https://github.com/microsoft/generative-ai-for-beginners | Microsoft | MIT | 18-lesson course — prompting, RAG, LLM fundamentals, agents, evals, responsible AI |
+| Agents Towards Production | https://github.com/NirDiamant/agents-towards-production | NirDiamant | MIT | Production agent patterns — guardrails, memory, multi-agent, observability, evaluation |
 
-## Tertiary sources (LinkedIn saves — pointers to primary/secondary)
+## Reference framework (public job descriptions)
 
-LinkedIn posts that pointed at the primary and secondary sources above. Recorded as provenance ("Manmeet encountered this concept via X's post"); the posts themselves are not citations.
-
-| Source | Author | Category |
-|--------|--------|----------|
-| Vibe Coding Essentials | Maria R | AI PM Skills |
-| OpenAI/Anthropic PM Requirements | Aakash Gupta | AI PM Skills |
-| Prompt Engineering Courses | Sumon Kabir | Free Resources |
-| Stanford AI Curriculum | Sairam Sundaresan | Free Resources |
-| 10 Free GitHub Repos | Ghadeer A | Free Resources |
-| Opus-4.6 Breakdown | Maria R | Claude Code |
-| Claude Optimization | Chorouk Malmoum | Claude Code |
-| AI PM Interview Prep | singhashutosh05 | Career Advice |
-| Salary Benchmarks | Pawel Huryn | Career Advice |
-
-## Reference framework (not ingested as concepts)
-
-Used by the critic for completeness gap-checking — cross-referenced against the proposed concepts to flag gaps.
+Public job postings used by the critic for completeness gap-checking. These are public reference material.
 
 | Source | Used for |
 |--------|----------|
 | 10 AI PM job descriptions (Apple, DeepMind, IBM, Intel, Meta, NVIDIA, OpenAI, Salesforce, Tesla, Uber) | Reference framework — what hiring managers probe |
 | AI PM Interview Guidance (8 categories of technical questions) | Reference framework — interview question surface |
+
+## Local-only sources (not credited here)
+
+Sources read locally by the ingestion agent but not redistributed (LinkedIn posts, practitioner blog posts, locally-authored synthesis docs) are recorded in the local `sources/` directory provenance only. They are not named in this public file because their content is not licensed for redistribution. The curriculum's per-node citations point at the primary sources these materials *pointed at*, not at the materials themselves.
 
 ## License of this curriculum
 
