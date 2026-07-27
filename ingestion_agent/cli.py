@@ -219,7 +219,7 @@ def main(argv: list[str] | None = None) -> int:
             "development", "commercialize", "scalable", "agile", "b2b",
             "ai-specific requirements", "key responsibilities", "role summary",
         })
-        covered_ids = {node.id for node in merged_results}
+        covered_ids = {node.id for node, _ in merged_results}
         covered_keywords = {
             nid.split("/")[-1].replace("-", " ") for nid in covered_ids
         }
