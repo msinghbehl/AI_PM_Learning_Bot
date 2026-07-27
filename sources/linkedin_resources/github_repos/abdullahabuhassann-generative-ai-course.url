@@ -1,0 +1,11 @@
+https://github.com/AbdullahAbuHassann/GenerativeAICourse
+
+# Generative AI Course (AbdullahAbuHassann)
+
+The source repo for the `GenerativeAICourse/lessons/` markdown files already in this corpus. The agent can fetch the README for context on the course structure, or ingest the lesson files directly (already saved locally in `sources/GenerativeAICourse/lessons/`).
+
+Covers: LLMs, prompt engineering, RAG, agents, MCP, fine-tuning, evaluation, LLMOps, ethics, case studies.
+
+Category: GitHub Repos
+Author: AbdullahAbuHassann
+Date: 2026-07-26

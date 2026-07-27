@@ -1,0 +1,21 @@
+https://www.anthropic.com/claude
+
+# Anthropic — Claude model family
+
+Canonical primary source for:
+- Claude 3.5 Sonnet / Haiku capabilities, context window (200K tokens, 1M preview)
+- Model card content (capabilities, limitations, safety, intended use)
+- Constitutional AI / RLHF approach
+- Prompt caching, tool use, structured outputs
+
+Tier: Primary (model creator)
+Accessed: 2026-07-26
+
+## Notes
+
+The Claude model card and documentation surface is the ground truth for Anthropic model capabilities. The agent should fetch:
+- https://www.anthropic.com/claude (model family overview)
+- https://www.anthropic.com/news (release notes / reports)
+- https://docs.anthropic.com/ (developer docs — context windows, tool use, structured outputs, prompt caching)
+
+These cover concept nodes: #1 (foundation-vs-finetuned), #5 (context-windows), #7 (prompting-techniques), #17 (reading-model-cards), #20 (ai-safety-basics).

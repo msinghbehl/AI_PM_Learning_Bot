@@ -1,0 +1,14 @@
+https://github.com/NirDiamant/agents-towards-production
+
+# Agents Towards Production (NirDiamant)
+
+The source repo for the `agents-towards-production/README.md` already in this corpus. The open-source playbook for building production-ready GenAI agents — covers stateful workflows, vector memory, web search, Docker deployment, FastAPI, security guardrails, GPU scaling, multi-agent coordination, observability, and evaluation.
+
+Tier: Secondary (practitioner — NirDiamant-authored)
+Category: GitHub Repos
+Author: NirDiamant
+Date: 2026-07-26
+
+## Notes
+
+The agent should fetch the README via `gh api`. The notebooks were removed from the local copy (not agent-ingestible as `.ipynb`), but the README is the synthesis and the repo URL lets the agent follow one-hop links to specific tutorial content if needed. Relevant for concept nodes #7 (prompting), #8 (RAG), #11-14 (evals), #18 (model-routing), #21 (prompt-injection-security — the repo has guardrail tutorials).

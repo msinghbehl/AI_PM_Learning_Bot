@@ -1,0 +1,24 @@
+https://openai.com/research/gpt-4
+
+# OpenAI — GPT-4 technical report
+
+Canonical primary source for:
+- GPT-4 capabilities, benchmarks (MMLU, HumanEval)
+- Model card content (limitations, safety, intended use)
+- Training pipeline (pretraining → RLHF)
+- Context window, capabilities, failure modes
+
+Tier: Primary (model creator)
+Accessed: 2026-07-26
+
+## Notes
+
+The GPT-4 technical report is the canonical primary source for:
+- #3 (training-pipeline) — the pretraining → RLHF pipeline
+- #4 (reading-model-reports) — how to read a model report
+- #11 (why-evals-matter) — MMLU/HumanEval benchmarks, Goodhart's law
+- #17 (reading-model-cards) — the model card as an artifact
+
+The agent should fetch the report PDF or the research page. Also relevant:
+- https://platform.openai.com/docs (developer docs — prompting, structured outputs, function calling)
+- https://openai.com/research (research blog — newer model releases)

@@ -1,0 +1,19 @@
+https://arxiv.org/abs/2203.02155
+
+# "Training language models to follow instructions with human feedback" (InstructGPT / RLHF paper, OpenAI, 2022)
+
+Canonical primary source for:
+- RLHF (Reinforcement Learning from Human Feedback) — the technique
+- The pretraining → SFT → RLHF pipeline (the third stage)
+- Why models "align" to human preferences
+
+Tier: Primary (research — OpenAI-authored, cited by every alignment discussion)
+Accessed: 2026-07-26
+
+## Notes
+
+This is the canonical primary source for:
+- #3 (training-pipeline) — the RLHF stage specifically
+- #20 (ai-safety-basics) — alignment, why models refuse, what RLHF does
+
+The agent should fetch the arXiv abstract page or PDF. This is the paper that defines RLHF as practiced; every subsequent alignment technique (constitutional AI, DPO) references it.

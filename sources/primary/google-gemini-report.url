@@ -1,0 +1,25 @@
+https://deepmind.google/technologies/gemini/
+
+# Google DeepMind — Gemini
+
+Canonical primary source for:
+- Gemini 1.5 Pro capabilities, Mixture-of-Experts architecture
+- Long context window (up to 1M tokens)
+- Model card content (capabilities, limitations, safety)
+- Multimodal capabilities
+
+Tier: Primary (model creator)
+Accessed: 2026-07-26
+
+## Notes
+
+The Gemini technical report and model card are the canonical primary source for:
+- #2 (transformer-architecture-basics) — MoE architecture
+- #5 (context-windows) — the 1M-token context window, what it enables and breaks
+- #6 (long-context-vs-rag) — when long context makes RAG unnecessary
+- #17 (reading-model-cards) — model card as artifact
+
+The agent should fetch:
+- https://deepmind.google/technologies/gemini/ (model overview)
+- https://deepmind.google/technologies/gemini/#capabilities (capabilities)
+- The Gemini 1.5 technical report (search for the arXiv or DeepMind blog link)

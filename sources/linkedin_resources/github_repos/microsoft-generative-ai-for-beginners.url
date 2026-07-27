@@ -1,0 +1,14 @@
+https://github.com/microsoft/generative-ai-for-beginners
+
+# Generative AI for Beginners (Microsoft)
+
+Microsoft's official 18-lesson course on generative AI. Covers: prompt engineering, RAG, LLM fundamentals, agents, evaluation, responsible AI, and applied use cases.
+
+Tier: Secondary (practitioner — Microsoft-authored course material)
+Category: GitHub Repos
+Author: Microsoft
+Date: 2026-07-26
+
+## Notes
+
+The agent should fetch the README via `gh api` for the lesson index and structure. This is a strong secondary source — Microsoft-authored, well-structured, covers the same concept surface as the AbdullahAbuHassann course but from a different angle (more enterprise/applied framing). Useful for cross-referencing concept nodes #7 (prompting), #8 (RAG), #9 (fine-tuning), #11-14 (evals), #20 (ai-safety).

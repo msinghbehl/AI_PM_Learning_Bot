@@ -16,3 +16,13 @@ venv/
 
 # Data
 data/*.db
+
+# Sources — keep pointers/READMEs/CREDITS committed, gitignore full-content pastes
+# that are not explicitly licensed for redistribution. The agent reads these locally;
+# the repo records THAT we used them and WHERE to find them, not the content itself.
+sources/GenerativeAICourse/lessons/*.md
+sources/GenerativeAICourse_README.md
+sources/agents-towards-production_README.md
+sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+sources/linkedin_resources/**/*.md
+sources/karpathy-llm-wiki.md

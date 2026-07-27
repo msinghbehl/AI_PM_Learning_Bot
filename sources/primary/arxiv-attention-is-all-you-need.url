@@ -1,0 +1,18 @@
+https://arxiv.org/abs/1706.03762
+
+# "Attention Is All You Need" (Vaswani et al., 2017)
+
+Canonical primary source for:
+- Transformer architecture (self-attention, multi-head attention, positional encoding)
+- The foundational paper that every modern LLM builds on
+
+Tier: Primary (research — cited by every model report)
+Accessed: 2026-07-26
+
+## Notes
+
+This is the foundational paper for:
+- #2 (transformer-architecture-basics) — the architecture itself
+- #1 (foundation-vs-finetuned) — the conceptual primitive (transformers as the foundation)
+
+The agent should fetch the arXiv abstract page or the PDF. This paper is cited by every model report (GPT-4, Claude, Gemini), so it passes the "cited by primary" filter for arXiv inclusion per the tier list.
