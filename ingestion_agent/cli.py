@@ -152,25 +152,81 @@ def main(argv: list[str] | None = None) -> int:
             sources = [args.source]
 
         all_results: list[tuple[ConceptNode, object]] = []
+        all_nodes: list[ConceptNode] = []
         for source in sources:
             print(f"Ingesting: {source}", file=sys.stderr)
             results = _ingest_one(source, drafter, critic, reference_framework)
             all_results.extend(results)
+            all_nodes.extend(node for node, _ in results)
             print(f"  → {len(results)} proposals", file=sys.stderr)
 
+        # Merge proposals for the same node id across sources (spec §13)
+        merged_nodes = merge_proposals(all_nodes)
+        # Re-run critic on merged nodes (sources may have combined)
+        merged_results: list[tuple[ConceptNode, object]] = []
+        for node in merged_nodes:
+            source_text = ""
+            for src in node.source:
+                if src.is_primary:
+                    source_text = src.anchor  # use the anchor as the grounding text
+                    break
+            if not source_text and node.source:
+                source_text = node.source[0].anchor
+            critique = critic.critique(node, source_text, reference_framework)
+            merged_results.append((node, critique))
+
         # Write staging YAML
-        write_staging_yaml(all_results, args.output)
+        write_staging_yaml(merged_results, args.output)
         print(
-            f"\nWrote {len(all_results)} proposals to {args.output}", file=sys.stderr)
+            f"\nWrote {len(merged_results)} merged proposals to {args.output}", file=sys.stderr)
 
         # Gate 6 final gap pass (spec §5): flag concepts named in ≥2 JDs
-        # but not covered by any node
-        covered_ids = {node.id for node, _ in all_results}
+        # but not covered by any node. Filter stopwords to reduce noise.
+        _STOPWORDS = frozenset({
+            "the", "and", "for", "with", "from", "are", "was", "were", "been",
+            "have", "has", "had", "this", "that", "these", "those", "into",
+            "through", "during", "before", "after", "above", "below", "over",
+            "under", "again", "further", "then", "once", "here", "there",
+            "when", "where", "why", "how", "all", "each", "few", "more",
+            "most", "other", "some", "such", "only", "own", "same", "than",
+            "too", "very", "can", "will", "just", "should", "now", "also",
+            "able", "ability", "based", "using", "use", "including", "put",
+            "know", "work", "strong", "deep", "high", "low", "real", "key",
+            "specific", "required", "related", "ensure", "drive", "focus",
+            "focusing", "lead", "master", "track", "field", "domain",
+            "years", "bachelor", "role", "summary", "responsibilities",
+            "qualifications", "skills", "technical", "business", "product",
+            "products", "platform", "platforms", "tools", "framework",
+            "frameworks", "systems", "system", "software", "hardware",
+            "data", "science", "computer", "engineering", "development",
+            "deployment", "management", "performance", "performance",
+            "optimization", "optimize", "pipeline", "pipelines", "cloud",
+            "aws", "gcp", "infrastructure", "environment", "teams", "teams",
+            "stakeholder", "collaborate", "cross", "functional", "internal",
+            "external", "commercial", "enterprise", "market", "strategies",
+            "solutions", "needs", "requirements", "roadmaps", "lifecycle",
+            "ideation", "launch", "deploy", "monitor", "oversee", "define",
+            "translate", "bridge", "align", "driven", "powered", "cutting",
+            "breakthroughs", "rise", "edge", "low", "federated", "differential",
+            "privacy", "compliance", "ethics", "ethical", "safety", "transparency",
+            "alignment", "autonomous", "mobility", "robotics", "device",
+            "b2b", "saas", "res", "red", "pre", "post", "now", "time",
+            "user", "facing", "familiarity", "proficiency", "experience",
+            "expertise", "understanding", "knowledge", "learning", "learn",
+            "models", "model", "tuning", "fine", "inference", "api", "gpt",
+            "agi", "applications", "applications", "generative", "powered",
+            "compute", "computing", "architectures", "ecosystem", "integration",
+            "development", "commercialize", "scalable", "agile", "b2b",
+            "ai-specific requirements", "key responsibilities", "role summary",
+        })
+        covered_ids = {node.id for node in merged_results}
         covered_keywords = {
             nid.split("/")[-1].replace("-", " ") for nid in covered_ids
         }
         gap_count = 0
         for concept in reference_framework.all_concepts_lower:
+            if len(concept) < 4 or concept in _STOPWORDS:
+                continue
             if reference_framework.concept_coverage(concept) >= 2:
                 if not any(
                     concept in kw or kw in concept for kw in covered_keywords
