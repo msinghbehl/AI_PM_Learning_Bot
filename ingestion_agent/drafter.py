@@ -62,6 +62,90 @@ TARGET_NODES: list[dict[str, Any]] = [
 
 _HAIKU_MODEL = "claude-haiku-4-5"
 
+# Valid enum values for normalization
+_VALID_DIFFICULTIES = {"easy", "medium", "hard"}
+_DIFFICULTY_MAP = {1: "easy", 2: "medium", 3: "hard",
+                   "1": "easy", "2": "medium", "3": "hard"}
+_VALID_SOURCE_TYPES = {"model-card", "blog",
+                       "paper", "docs", "report", "pasted"}
+_TYPE_MAP = {
+    "pattern-documentation": "docs", "documentation": "docs", "doc": "docs",
+    "model_card": "model-card", "modelcard": "model-card", "card": "model-card",
+    "article": "blog", "post": "blog", "newsletter": "blog",
+    "research": "paper", "arxiv": "paper", "study": "paper",
+    "technical-report": "report", "release": "report", "announcement": "report",
+    "text": "pasted", "note": "pasted", "local": "pasted",
+}
+_VALID_CHALLENGE_TYPES = {"concept-recall", "scenario", "technical-deep-dive"}
+_CHALLENGE_MAP = {
+    "explain-limitation": "concept-recall", "explain": "concept-recall",
+    "compare-approaches": "scenario", "compare": "scenario", "apply": "scenario",
+    "deep-dive": "technical-deep-dive", "deepdive": "technical-deep-dive",
+    "analysis": "technical-deep-dive", "analyze": "technical-deep-dive",
+}
+_TARGET_IDS = {n["id"] for n in TARGET_NODES}
+
+
+def _today() -> str:
+    from datetime import date
+    return date.today().isoformat()
+
+
+def _normalize_proposal(item: dict) -> dict:
+    """Normalize Haiku's free-form output to match the schema's strict enums.
+
+    Haiku often returns difficulty as a number, type as a free-form string,
+    phase as a string, etc. This maps common deviations to valid values.
+    """
+    # gap: always "AI technical fluency"
+    item["gap"] = "AI technical fluency"
+
+    # difficulty: map numbers and invalid strings to valid enum
+    diff = item.get("difficulty")
+    if diff in _DIFFICULTY_MAP:
+        item["difficulty"] = _DIFFICULTY_MAP[diff]
+    elif diff not in _VALID_DIFFICULTIES:
+        item["difficulty"] = "medium"  # safe default
+
+    # phase: ensure integer 1
+    phase = item.get("phase", 1)
+    if phase in (2, "2", "phase 2", "parked"):
+        item["phase"] = 2
+    else:
+        item["phase"] = 1
+
+    # source entries: normalize type
+    for src in item.get("source", []):
+        if isinstance(src, dict):
+            stype = src.get("type", "docs")
+            if stype not in _VALID_SOURCE_TYPES:
+                src["type"] = _TYPE_MAP.get(stype, "docs")
+            # accessed_at: ensure string
+            if not isinstance(src.get("accessed_at"), str):
+                src["accessed_at"] = _today()
+
+    # challenge_types: map to valid values
+    cts = item.get("challenge_types", [])
+    normalized_cts = []
+    for ct in cts:
+        if ct in _VALID_CHALLENGE_TYPES:
+            normalized_cts.append(ct)
+        elif ct in _CHALLENGE_MAP:
+            normalized_cts.append(_CHALLENGE_MAP[ct])
+    if not normalized_cts:
+        normalized_cts = ["concept-recall"]
+    item["challenge_types"] = normalized_cts
+
+    # id: skip if not a valid target id
+    if item.get("id") not in _TARGET_IDS:
+        return None
+
+    # prerequisites: ensure they're valid target ids
+    prereqs = item.get("prerequisites", [])
+    item["prerequisites"] = [p for p in prereqs if p in _TARGET_IDS]
+
+    return item
+
 
 def _format_target_nodes_table() -> str:
     """Format the 21 target nodes as a table for the Haiku prompt."""
@@ -86,14 +170,30 @@ Source URL: {source_url}
 Target concept nodes (author proposals for any that this source grounds):
 {_format_target_nodes_table()}
 
-For each target node that this source grounds, produce a YAML proposal with all 9 fields:
-id, gap, concept, difficulty, source (list with url/type/accessed_at/anchor), related_gaps, prerequisites, challenge_types, phase.
+For each target node that this source grounds, produce a YAML proposal with EXACTLY these 9 fields and values:
 
-The `anchor` must be a verbatim phrase from the source text.
-The `source.url` should be {source_url} (the source you're grounding in).
-The `accessed_at` should be today's date.
-Only propose nodes the source actually grounds — do not invent concepts.
-If the source doesn't ground any node, return an empty list.
+- id: (use the exact id from the table above, e.g. "ai-fluency/rag-fundamentals")
+- gap: "AI technical fluency"  (always this exact string)
+- concept: (one-line description of the concept)
+- difficulty: (one of: "easy", "medium", "hard" — as a string, not a number)
+- source: (a list with one or more entries, each having:)
+    - url: "{source_url}"
+    - type: (one of: "model-card", "blog", "paper", "docs", "report", "pasted")
+    - accessed_at: "{_today()}"
+    - anchor: (a verbatim phrase from the source text, in quotes)
+- related_gaps: (list of strings, e.g. ["interview-readiness"], or [])
+- prerequisites: (use the exact prerequisite ids from the table above, or [] for root)
+- challenge_types: (list of one or more of: "concept-recall", "scenario", "technical-deep-dive")
+- phase: 1  (the integer 1, not a string)
+
+CRITICAL RULES:
+- The `anchor` MUST be a verbatim phrase copied from the source text above.
+- The `id` MUST be one of the exact ids from the table — do not invent new ids.
+- The `difficulty` MUST be the string "easy", "medium", or "hard" — not a number.
+- The `type` MUST be one of the 6 allowed values — not a free-form string.
+- The `phase` MUST be the integer 1.
+- Only propose nodes the source actually grounds — do not invent concepts.
+- If the source doesn't ground any node, return an empty list.
 
 Output ONLY the YAML list inside a ```yaml code block."""
 
@@ -145,11 +245,18 @@ class Drafter:
         for item in parsed:
             if not isinstance(item, dict):
                 continue
+            # Normalize Haiku's free-form output to match schema enums
+            item = _normalize_proposal(item)
+            if item is None:
+                continue
             try:
                 node = ConceptNode(**item)
                 proposals.append(node)
-            except Exception:
-                # Skip invalid proposals — the critic would flag them anyway
+            except Exception as e:
+                # Log the validation error so it's not silently swallowed
+                import sys
+                print(
+                    f"  skipping invalid proposal (id={item.get('id', '?')}): {e}", file=sys.stderr)
                 continue
 
         return proposals

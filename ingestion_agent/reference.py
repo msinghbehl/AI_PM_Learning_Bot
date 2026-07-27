@@ -65,7 +65,7 @@ def _extract_concepts(text: str) -> set[str]:
     # Extract bullet point content (lines starting with -)
     for match in re.finditer(r"^\s*-\s*(.+)$", lower, re.MULTILINE):
         phrase = match.group(1).strip().rstrip(".")
-        if 3 < len(phrase) < 100:
+        if 2 < len(phrase) < 100:  # >= 3 chars
             concepts.add(phrase)
             # Also index individual words for keyword matching
             for word in re.findall(r"[a-z0-9]+", phrase):
@@ -75,17 +75,16 @@ def _extract_concepts(text: str) -> set[str]:
     # Extract heading content (lines starting with #)
     for match in re.finditer(r"^#+\s*(.+)$", lower, re.MULTILINE):
         phrase = match.group(1).strip()
-        if 3 < len(phrase) < 100:
+        if 2 < len(phrase) < 100:  # >= 3 chars
             concepts.add(phrase)
             for word in re.findall(r"[a-z0-9]+", phrase):
                 if len(word) >= 3:
                     concepts.add(word)
 
-    # Also index the full text body for keyword coverage (catches concepts
-    # mentioned in prose, not just bullets)
-    for word in re.findall(r"[a-z0-9]+", lower):
-        if len(word) >= 3:
-            concepts.add(word)
+    # Note: we do NOT index every word from the full body — that would add
+    # every common English word ("the", "and", "for") and make is_covered()
+    # return True for anything. Only bullet/heading phrases + their keywords
+    # are indexed, which gives enough coverage signal for the critic.
 
     return concepts
 
