@@ -58,10 +58,43 @@ class TestWriteStagingYaml:
         text = output.read_text()
         # The critic comments should be present
         assert "# critic:" in text
-        assert "groundedness" in text
-        # The YAML between comments should be valid (strip comments and parse)
-        # Verify the file exists and has content
-        assert "ai-fluency/foundation-vs-finetuned" in text
+        # The YAML (with critic comments stripped) must be valid and parseable
+        lines = [l for l in text.splitlines() if not l.strip().startswith("# critic:")]
+        parsed = yaml.safe_load("\n".join(lines))
+        assert isinstance(parsed, list)
+        assert len(parsed) == 1
+        assert parsed[0]["id"] == "ai-fluency/foundation-vs-finetuned"
+
+    def test_anchor_with_embedded_quotes_is_valid_yaml(self, tmp_path):
+        """Anchors containing double quotes must not break the YAML output."""
+        node = ConceptNode(
+            id="ai-fluency/test-node",
+            gap="AI technical fluency",
+            concept="Test concept",
+            difficulty="medium",
+            source=[SourceEntry(
+                url="https://example.com",
+                type="model-card",
+                accessed_at="2026-07-26",
+                anchor='a similarity search finds the "most relevant" vector chunks',
+            )],
+            related_gaps=[],
+            prerequisites=[],
+            challenge_types=["concept-recall"],
+            phase=1,
+        )
+        critique = _make_critique(node)
+        output = tmp_path / "staging.yaml"
+
+        write_staging_yaml([(node, critique)], output)
+
+        text = output.read_text()
+        # Strip critic comments and verify the YAML is valid
+        lines = [l for l in text.splitlines() if not l.strip().startswith("# critic:")]
+        parsed = yaml.safe_load("\n".join(lines))
+        assert isinstance(parsed, list)
+        assert len(parsed) == 1
+        assert "most relevant" in parsed[0]["source"][0]["anchor"]
 
     def test_empty_proposals_writes_empty_file(self, tmp_path):
         output = tmp_path / "staging.yaml"

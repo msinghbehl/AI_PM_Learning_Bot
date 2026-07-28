@@ -38,6 +38,12 @@ def merge_proposals(proposals: list[ConceptNode]) -> list[ConceptNode]:
     return list(merged.values())
 
 
+def _yaml_escape(value: str) -> str:
+    """Escape a string for use inside double-quoted YAML."""
+    # Escape backslashes first, then double quotes
+    return value.replace("\\", "\\\\").replace('"', '\\"')
+
+
 def _format_node_with_comments(node: ConceptNode, critique: CritiqueResult) -> str:
     """Format a single node as YAML with inline critic comments."""
     lines: list[str] = []
@@ -45,7 +51,7 @@ def _format_node_with_comments(node: ConceptNode, critique: CritiqueResult) -> s
     # Node fields
     lines.append(f"- id: {node.id}")
     lines.append(f"  gap: {node.gap}")
-    lines.append(f'  concept: "{node.concept}"')
+    lines.append(f'  concept: "{_yaml_escape(node.concept)}"')
     lines.append(f"  difficulty: {node.difficulty}")
 
     # Source list
@@ -54,7 +60,7 @@ def _format_node_with_comments(node: ConceptNode, critique: CritiqueResult) -> s
         lines.append(f"    - url: {src.url}")
         lines.append(f"      type: {src.type}")
         lines.append(f"      accessed_at: {src.accessed_at}")
-        lines.append(f'      anchor: "{src.anchor}"')
+        lines.append(f'      anchor: "{_yaml_escape(src.anchor)}"')
 
     # Related gaps
     if node.related_gaps:
