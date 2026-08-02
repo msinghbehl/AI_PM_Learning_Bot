@@ -80,3 +80,96 @@ class TestBuildApp:
             if hasattr(h, "commands") and "start" in h.commands
         ]
         assert len(start_handlers) == 1
+
+    def test_build_app_has_today_handler(self, _reload_config):
+        from coach.bot import build_app
+        app = build_app()
+        handler_groups = app.handlers
+        all_handlers = [h for handlers in handler_groups.values() for h in handlers]
+        today_handlers = [
+            h for h in all_handlers
+            if hasattr(h, "commands") and "today" in h.commands
+        ]
+        assert len(today_handlers) == 1
+
+    def test_build_app_has_lesson_generator(self, _reload_config):
+        from coach.bot import build_app
+        app = build_app()
+        assert "lesson_generator" in app.bot_data
+
+
+class TestTodayHandler:
+    @pytest.mark.asyncio
+    async def test_today_sends_lesson_with_all_parts(self, _reload_config):
+        from coach.bot import on_today
+        from coach.lesson import Lesson
+        from coach.config import ChallengeType
+
+        lesson = Lesson(
+            pm_concept="Prioritization",
+            ai_concept="Foundation models",
+            challenge="When fine-tune vs RAG?",
+            challenge_type=ChallengeType.CONCEPT_RECALL,
+            concept_node_id="ai-fluency/test",
+            concept_gap="AI technical fluency",
+            concept_source=[{"url": "https://x.com", "type": "report"}],
+        )
+        update = _make_update("/today")
+        context = MagicMock()
+        context.bot_data = {"lesson_generator": MagicMock()}
+        context.bot_data["lesson_generator"].generate.return_value = lesson
+
+        await on_today(update, context)
+
+        update.message.reply_text.assert_called_once()
+        reply = update.message.reply_text.call_args[0][0]
+        assert "Prioritization" in reply
+        assert "Foundation models" in reply
+        assert "fine-tune" in reply
+        assert "/answer" in reply
+
+    @pytest.mark.asyncio
+    async def test_today_stores_lesson_in_bot_data(self, _reload_config):
+        from coach.bot import on_today
+        from coach.lesson import Lesson
+        from coach.config import ChallengeType
+
+        lesson = Lesson(
+            pm_concept="p", ai_concept="a", challenge="c",
+            challenge_type=ChallengeType.SCENARIO,
+            concept_node_id="ai-fluency/test", concept_gap="AI technical fluency",
+            concept_source=[],
+        )
+        update = _make_update("/today")
+        context = MagicMock()
+        context.bot_data = {"lesson_generator": MagicMock()}
+        context.bot_data["lesson_generator"].generate.return_value = lesson
+
+        await on_today(update, context)
+        assert context.bot_data["current_lesson"] is lesson
+
+
+class TestPushJob:
+    @pytest.mark.asyncio
+    async def test_push_job_sends_lesson_to_owner(self, _reload_config):
+        from coach.bot import on_push_job
+        from coach.lesson import Lesson
+        from coach.config import ChallengeType
+
+        lesson = Lesson(
+            pm_concept="p", ai_concept="a", challenge="c",
+            challenge_type=ChallengeType.TECHNICAL_DEEP_DIVE,
+            concept_node_id="ai-fluency/test", concept_gap="AI technical fluency",
+            concept_source=[],
+        )
+        context = MagicMock()
+        context.bot_data = {"lesson_generator": MagicMock()}
+        context.bot_data["lesson_generator"].generate.return_value = lesson
+        context.bot.send_message = AsyncMock()
+
+        await on_push_job(context)
+
+        context.bot.send_message.assert_called_once()
+        text = context.bot.send_message.call_args[1]["text"]
+        assert "Today's Lesson" in text
+        assert context.bot_data["current_lesson"] is lesson
