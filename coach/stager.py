@@ -63,12 +63,14 @@ class PRStager:
 
         # Commit lesson file
         lesson_path = f"lessons/{date_str}/lesson.json"
-        self._commit_file(pr_branch, lesson_path, json.dumps(lesson_data, indent=2))
+        self._commit_file(pr_branch, lesson_path,
+                          json.dumps(lesson_data, indent=2))
 
         # Commit record file
         if record_data:
             record_path = f"lessons/{date_str}/record.json"
-            self._commit_file(pr_branch, record_path, json.dumps(record_data, indent=2))
+            self._commit_file(pr_branch, record_path,
+                              json.dumps(record_data, indent=2))
 
         # Open PR
         pr = self._create_pr(
@@ -76,7 +78,7 @@ class PRStager:
             base=self._branch,
             title=f"Lesson {date_str}",
             body=f"Staged lesson + learning record for {date_str}.\n\n"
-                 f"Review and merge — this is the human gate.",
+            f"Review and merge — this is the human gate.",
         )
         return StagedPR(number=pr["number"], url=pr["html_url"], title=pr["title"])
 

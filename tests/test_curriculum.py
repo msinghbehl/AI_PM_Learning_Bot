@@ -23,7 +23,7 @@ def _valid_node(**overrides) -> dict:
         "concept": "Test concept",
         "difficulty": "medium",
         "source": [{"url": "https://example.com", "type": "report",
-                     "accessed_at": "2026-08-01", "anchor": "test anchor"}],
+                    "accessed_at": "2026-08-01", "anchor": "test anchor"}],
         "related_gaps": [],
         "prerequisites": [],
         "challenge_types": ["concept-recall"],
@@ -35,7 +35,8 @@ def _valid_node(**overrides) -> dict:
 
 class TestLoadCurriculum:
     def test_loads_all_nodes(self, tmp_path):
-        path = _write_curriculum(tmp_path, [_valid_node(), _valid_node(id="ai-fluency/second")])
+        path = _write_curriculum(
+            tmp_path, [_valid_node(), _valid_node(id="ai-fluency/second")])
         nodes = load_curriculum(path)
         assert len(nodes) == 2
         assert nodes[0].id == "ai-fluency/test-node"
@@ -60,7 +61,8 @@ class TestLoadCurriculum:
     def test_non_root_node(self, tmp_path):
         path = _write_curriculum(tmp_path, [
             _valid_node(id="ai-fluency/root"),
-            _valid_node(id="ai-fluency/child", prerequisites=["ai-fluency/root"]),
+            _valid_node(id="ai-fluency/child",
+                        prerequisites=["ai-fluency/root"]),
         ])
         nodes = load_curriculum(path)
         assert nodes[1].is_root is False
@@ -95,12 +97,14 @@ class TestMissionGrounded:
 
 class TestInvalidValues:
     def test_invalid_difficulty_raises(self, tmp_path):
-        path = _write_curriculum(tmp_path, [_valid_node(difficulty="impossible")])
+        path = _write_curriculum(
+            tmp_path, [_valid_node(difficulty="impossible")])
         with pytest.raises(ValueError, match="invalid difficulty"):
             load_curriculum(path)
 
     def test_invalid_challenge_type_raises(self, tmp_path):
-        path = _write_curriculum(tmp_path, [_valid_node(challenge_types=["bogus"])])
+        path = _write_curriculum(
+            tmp_path, [_valid_node(challenge_types=["bogus"])])
         with pytest.raises(ValueError, match="invalid challenge_type"):
             load_curriculum(path)
 

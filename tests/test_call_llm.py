@@ -31,7 +31,8 @@ class TestRouting:
     def test_text_routes_to_requested_model(self):
         client = FakeClient([("hello", 10, 5, 0)])
         wrapper = CallLLM(client, _make_ledger())
-        resp = wrapper.text("sys", [{"role": "user", "content": "hi"}], model=ModelName.SONNET)
+        resp = wrapper.text(
+            "sys", [{"role": "user", "content": "hi"}], model=ModelName.SONNET)
         assert resp.model == ModelName.SONNET
         assert resp.text == "hello"
         assert client.calls[0][0] == ModelName.SONNET
@@ -90,7 +91,8 @@ class TestStructured:
         assert any("not valid" in m["content"] for m in second_messages)
 
     def test_strips_markdown_fences(self):
-        fenced = "```json\n" + json.dumps({"score": 3, "feedback": "great"}) + "\n```"
+        fenced = "```json\n" + \
+            json.dumps({"score": 3, "feedback": "great"}) + "\n```"
         client = FakeClient([(fenced, 10, 5, 0)])
         wrapper = CallLLM(client, _make_ledger())
         result = wrapper.structured(
@@ -124,7 +126,8 @@ class TestCostLogging:
         client = FakeClient([("hello", 100, 50, 0)])
         ledger = _make_ledger()
         wrapper = CallLLM(client, ledger)
-        wrapper.text("sys", [{"role": "user", "content": "hi"}], model=ModelName.HAIKU)
+        wrapper.text(
+            "sys", [{"role": "user", "content": "hi"}], model=ModelName.HAIKU)
         assert len(ledger.records) == 1
         rec = ledger.records[0]
         assert rec.model == ModelName.HAIKU
@@ -135,5 +138,6 @@ class TestCostLogging:
         client = FakeClient([("hello", 100, 50, 200)])
         ledger = _make_ledger()
         wrapper = CallLLM(client, ledger)
-        wrapper.text("sys", [{"role": "user", "content": "hi"}], model=ModelName.SONNET)
+        wrapper.text(
+            "sys", [{"role": "user", "content": "hi"}], model=ModelName.SONNET)
         assert ledger.records[0].cache_read_tokens == 200

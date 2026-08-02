@@ -21,9 +21,11 @@ def store(tmp_path):
 def _seed_answer(store, day, concept="a", band=GradeBand.MEETS, score=2):
     """Seed a challenge + answer + grade for a given day."""
     ts = datetime.combine(day, datetime.min.time())
-    cid = store.save_challenge(concept, ChallengeType.CONCEPT_RECALL, "q", "{}", ts)
+    cid = store.save_challenge(
+        concept, ChallengeType.CONCEPT_RECALL, "q", "{}", ts)
     aid = store.save_answer(cid, "ans", ts)
-    store.save_grade(aid, ModelName.SONNET, band, score, "f", "concept-recall", ts)
+    store.save_grade(aid, ModelName.SONNET, band,
+                     score, "f", "concept-recall", ts)
     return aid
 
 
@@ -73,7 +75,8 @@ class TestFairness:
             gid = grades[0]["id"]
             did = store.save_dispute(gid, "reason", datetime(2026, 8, 11 + i))
             # Resolve to the same band (no grade change)
-            store.resolve_dispute(did, GradeBand.MEETS, datetime(2026, 8, 11 + i))
+            store.resolve_dispute(did, GradeBand.MEETS,
+                                  datetime(2026, 8, 11 + i))
         signals = compute_signals(store, date(2026, 8, 20))
         assert signals.fairness_dispute_count >= 3
         # With 3 disputes and 0 grade changes, rate is 0% which is ≤50%

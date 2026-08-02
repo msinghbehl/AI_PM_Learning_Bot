@@ -103,7 +103,8 @@ class CallLLM:
         The critic is never downgraded (grading trust floor holds under cost pressure).
         """
         if caps.economy_mode and model == ModelName.SONNET and purpose != "critic":
-            log.info("economy mode: downgrading %s→Haiku for %s", model.value, purpose)
+            log.info("economy mode: downgrading %s→Haiku for %s",
+                     model.value, purpose)
             return ModelName.HAIKU
         return model
 
@@ -156,8 +157,10 @@ class CallLLM:
                 return parsed
             except (json.JSONDecodeError, SchemaError) as exc:
                 if attempt == 0:
-                    full_messages.append({"role": "assistant", "content": text})
-                    schema_desc = {k: getattr(v, "__name__", str(v)) for k, v in schema.items()}
+                    full_messages.append(
+                        {"role": "assistant", "content": text})
+                    schema_desc = {k: getattr(v, "__name__", str(v))
+                                   for k, v in schema.items()}
                     full_messages.append({
                         "role": "user",
                         "content": (

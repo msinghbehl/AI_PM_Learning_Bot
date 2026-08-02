@@ -22,13 +22,15 @@ class TestPRStager:
     @patch("coach.stager.requests")
     def test_stage_lesson_opens_pr_on_lessons_staging(self, mock_requests):
         branch_resp = _mock_response({"commit": {"sha": "abc123"}})
-        pr_resp = _mock_response({"number": 42, "html_url": "https://github.com/test/pr/42", "title": "Lesson 2026-08-01"})
+        pr_resp = _mock_response(
+            {"number": 42, "html_url": "https://github.com/test/pr/42", "title": "Lesson 2026-08-01"})
         commit_resp = _mock_response({"content": {"sha": "def"}})
         mock_requests.get.return_value = branch_resp
         mock_requests.post.side_effect = [commit_resp, pr_resp]
         mock_requests.put.return_value = commit_resp
 
-        stager = PRStager(token="test-token", repo="test/repo", branch="lessons-staging")
+        stager = PRStager(token="test-token", repo="test/repo",
+                          branch="lessons-staging")
         result = stager.stage_lesson(
             lesson_data={"pm_concept": "p", "ai_concept": "a"},
             record_data=[{"grade": "meets"}],
@@ -45,7 +47,8 @@ class TestPRStager:
     @patch("coach.stager.requests")
     def test_stage_lesson_never_commits_to_main(self, mock_requests):
         branch_resp = _mock_response({"commit": {"sha": "abc123"}})
-        pr_resp = _mock_response({"number": 1, "html_url": "url", "title": "t"})
+        pr_resp = _mock_response(
+            {"number": 1, "html_url": "url", "title": "t"})
         commit_resp = _mock_response({"content": {"sha": "def"}})
         mock_requests.get.return_value = branch_resp
         mock_requests.post.side_effect = [commit_resp, pr_resp]
@@ -61,7 +64,8 @@ class TestPRStager:
     @patch("coach.stager.requests")
     def test_stage_lesson_includes_lesson_and_record_files(self, mock_requests):
         branch_resp = _mock_response({"commit": {"sha": "abc123"}})
-        pr_resp = _mock_response({"number": 1, "html_url": "url", "title": "t"})
+        pr_resp = _mock_response(
+            {"number": 1, "html_url": "url", "title": "t"})
         commit_resp = _mock_response({"content": {"sha": "def"}})
         mock_requests.get.return_value = branch_resp
         mock_requests.post.side_effect = [commit_resp, pr_resp]
@@ -72,6 +76,7 @@ class TestPRStager:
             {"pm_concept": "p"}, [{"grade": "meets"}], date(2026, 8, 1),
         )
 
-        committed_paths = [call[0][0].split("/contents/")[1] for call in mock_requests.put.call_args_list]
+        committed_paths = [call[0][0].split(
+            "/contents/")[1] for call in mock_requests.put.call_args_list]
         assert any("lesson.json" in p for p in committed_paths)
         assert any("record.json" in p for p in committed_paths)

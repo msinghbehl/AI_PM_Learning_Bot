@@ -50,7 +50,8 @@ class TestCriticAgreement:
         grader = _make_grader(good)
         critic = Critic(grader)
         original = _make_grade(GradeBand.MEETS, 2)
-        result = critic.review("q", ChallengeType.CONCEPT_RECALL, "a", original)
+        result = critic.review(
+            "q", ChallengeType.CONCEPT_RECALL, "a", original)
         assert result.agrees is True
         assert result.band_delta == 0
 
@@ -59,7 +60,8 @@ class TestCriticAgreement:
         grader = _make_grader(good)
         critic = Critic(grader)
         original = _make_grade(GradeBand.MEETS, 2)
-        result = critic.review("q", ChallengeType.CONCEPT_RECALL, "a", original)
+        result = critic.review(
+            "q", ChallengeType.CONCEPT_RECALL, "a", original)
         assert result.band_delta == 1
         assert result.agrees is False  # ≥1-band disagreement
 
@@ -70,15 +72,18 @@ class TestCriticDisagreement:
         grader = _make_grader(good)
         critic = Critic(grader)
         original = _make_grade(GradeBand.BELOW, 0)
-        result = critic.review("q", ChallengeType.CONCEPT_RECALL, "a", original)
+        result = critic.review(
+            "q", ChallengeType.CONCEPT_RECALL, "a", original)
         assert result.band_delta == 3
         assert result.agrees is False
 
     def test_critic_grade_returned(self):
-        good = json.dumps({"band": "approaching", "score": 1, "feedback": "weak"})
+        good = json.dumps(
+            {"band": "approaching", "score": 1, "feedback": "weak"})
         grader = _make_grader(good)
         critic = Critic(grader)
         original = _make_grade(GradeBand.MEETS, 2)
-        result = critic.review("q", ChallengeType.CONCEPT_RECALL, "a", original)
+        result = critic.review(
+            "q", ChallengeType.CONCEPT_RECALL, "a", original)
         assert result.critic_grade.band == GradeBand.APPROACHING
         assert result.band_delta == 1

@@ -212,7 +212,8 @@ def _count_disputes(store: Store) -> int:
 
 def _count_grades(store: Store) -> int:
     conn = store._conn
-    row = conn.execute("SELECT COUNT(*) as n FROM grades WHERE is_deferred = 0").fetchone()
+    row = conn.execute(
+        "SELECT COUNT(*) as n FROM grades WHERE is_deferred = 0").fetchone()
     return row["n"] if row else 0
 
 

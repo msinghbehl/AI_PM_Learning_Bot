@@ -53,7 +53,8 @@ class Critic:
             caps=caps,
             purpose="critic",
         )
-        band_delta = abs(_band_to_int(critic_grade.band) - _band_to_int(original_grade.band))
+        band_delta = abs(_band_to_int(critic_grade.band) -
+                         _band_to_int(original_grade.band))
         agrees = band_delta == 0
 
         return CriticResult(
