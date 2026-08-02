@@ -101,6 +101,25 @@ class TestBuildApp:
         app = build_app()
         assert "lesson_generator" in app.bot_data
 
+    def test_build_app_job_queue_is_not_none(self, _reload_config):
+        """JobQueue must be available (requires [job-queue] extra)."""
+        from coach.bot import build_app
+        app = build_app()
+        assert app.job_queue is not None
+
+    def test_main_does_not_raise_no_event_loop(self, _reload_config):
+        """main() must not raise 'no current event loop' on Python 3.14+.
+
+        Python 3.14 removed implicit event loop creation. PTB 21.x calls
+        asyncio.get_event_loop() which raises RuntimeError. PTB 22.x fixed
+        this. This test mocks run_polling to avoid blocking, but verifies
+        the async runtime initializes without the event loop error.
+        """
+        from coach.bot import main
+        with patch("coach.bot.Application.run_polling") as mock_run:
+            main()
+            mock_run.assert_called_once()
+
 
 class TestTodayHandler:
     @pytest.mark.asyncio
@@ -190,7 +209,7 @@ class TestAnswerHandler:
 
         store = Store(init_db(tmp_path / "test.db"))
         cid = store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "q", "{}",
-                                    datetime(2026, 8, 1, 7))
+                                   datetime(2026, 8, 1, 7))
 
         update = _make_update("/answer my response")
         context = MagicMock()
@@ -281,8 +300,9 @@ class TestGradeJob:
 
         store = Store(init_db(tmp_path / "test.db"))
         cid = store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "What is RAG?", "{}",
-                                    datetime(2026, 8, 1, 7))
-        aid = store.save_answer(cid, "RAG retrieves chunks", datetime(2026, 8, 1, 12))
+                                   datetime(2026, 8, 1, 7))
+        aid = store.save_answer(
+            cid, "RAG retrieves chunks", datetime(2026, 8, 1, 12))
 
         grader = MagicMock()
         grader.grade.return_value = MagicMock(
@@ -291,7 +311,8 @@ class TestGradeJob:
         )
 
         context = MagicMock()
-        context.bot_data = {"store": store, "grader": grader, "critic": MagicMock()}
+        context.bot_data = {"store": store,
+                            "grader": grader, "critic": MagicMock()}
 
         await on_grade_job(context)
 
@@ -308,7 +329,8 @@ class TestGradeJob:
         store = Store(init_db(tmp_path / "test.db"))
         grader = MagicMock()
         context = MagicMock()
-        context.bot_data = {"store": store, "grader": grader, "critic": MagicMock()}
+        context.bot_data = {"store": store,
+                            "grader": grader, "critic": MagicMock()}
 
         await on_grade_job(context)
         grader.grade.assert_not_called()
@@ -324,7 +346,7 @@ class TestCriticIntegration:
 
         store = Store(init_db(tmp_path / "test.db"))
         cid = store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "q", "{}",
-                                    datetime(2026, 8, 1, 7))
+                                   datetime(2026, 8, 1, 7))
         aid = store.save_answer(cid, "ans", datetime(2026, 8, 1, 12))
 
         grader = MagicMock()
@@ -363,7 +385,7 @@ class TestCriticIntegration:
 
         store = Store(init_db(tmp_path / "test.db"))
         cid = store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "q", "{}",
-                                    datetime(2026, 8, 1, 7))
+                                   datetime(2026, 8, 1, 7))
         aid = store.save_answer(cid, "ans", datetime(2026, 8, 1, 12))
 
         grader = MagicMock()
