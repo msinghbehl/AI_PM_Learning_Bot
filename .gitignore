@@ -17,6 +17,9 @@ venv/
 # Data
 data/*.db
 
+# Session memory (agent working state, not project content)
+memories/
+
 # Sources — keep pointers/READMEs/CREDITS committed, gitignore full-content pastes
 # that are not explicitly licensed for redistribution. The agent reads these locally;
 # the repo records THAT we used them and WHERE to find them, not the content itself.
