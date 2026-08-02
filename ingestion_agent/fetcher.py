@@ -123,32 +123,127 @@ def extract_pdf_text(content: bytes) -> str:
     return "\n".join(page.extract_text() or "" for page in reader.pages)
 
 
+# Non-content file extensions — never fetch these as one-hop links
+_NON_CONTENT_EXTENSIONS = frozenset({
+    ".css", ".js", ".mjs", ".map",
+    ".jpg", ".jpeg", ".png", ".gif", ".svg", ".ico", ".webp", ".bmp",
+    ".woff", ".woff2", ".ttf", ".eot", ".otf",
+})
+
+# Infrastructure/asset hosts — never content, always skip
+_ASSET_HOSTS = frozenset({
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+    "github.githubassets.com",
+    "cdn.prod.website-files.com",
+    "avatars.githubusercontent.com",
+    "user-images.githubusercontent.com",
+    "github-cloud.s3.amazonaws.com",
+    "raw.githubusercontent.com",
+})
+
+# hreflang locale pattern: /<locale-code>/ where locale is 2-letter or xx-XX
+_HREFLANG_RE = re.compile(r"^https?://[^/]+/[a-z]{2}(-[A-Z]{2})?/")
+
+
+def _clean_url(url: str) -> str:
+    """Strip HTML attribute artifacts from a URL.
+
+    Bare-URL regex captures trailing characters from HTML attributes like
+    href="https://example.com"> or href="https://example.com"/> — strip them.
+    Handles self-closing tag syntax (/>), quoted attributes ("...">), and
+    stray angle brackets without removing legitimate trailing slashes.
+    """
+    # Strip self-closing tag artifacts: /> at the end
+    if url.endswith("/>"):
+        url = url[:-2]
+    # Strip trailing HTML attribute artifacts: ", ', >, whitespace
+    url = url.rstrip("\"'> \t\n\r")
+    # Also strip a leading quote if the regex captured it
+    url = url.lstrip("\"'")
+    return url
+
+
+def _is_non_content_url(url: str) -> bool:
+    """True if the URL is a non-content asset (CSS/JS/image/font/CDN/hreflang)."""
+    lower = url.lower()
+
+    # Skip non-content file extensions
+    for ext in _NON_CONTENT_EXTENSIONS:
+        if lower.endswith(ext) or ext + "?" in lower or ext + "#" in lower:
+            return True
+
+    # Skip known asset/infrastructure hosts
+    try:
+        from urllib.parse import urlparse
+        host = urlparse(lower).hostname or ""
+        if host in _ASSET_HOSTS:
+            return True
+    except Exception:
+        pass
+
+    return False
+
+
+def _is_hreflang_alternate(url: str, canonical_urls: set[str]) -> bool:
+    """True if the URL is a hreflang alternate of an already-seen canonical URL.
+
+    Detects patterns like openai.com/ar/index/... or openai.com/bg-BG/index/...
+    when the canonical (non-localized) URL is already in the list.
+    """
+    if not _HREFLANG_RE.match(url):
+        return False
+    # Build the canonical version by stripping the locale segment
+    from urllib.parse import urlparse
+    parsed = urlparse(url)
+    path = parsed.path
+    # Strip /<locale>/ prefix
+    parts = path.split("/", 2)  # ['', 'ar', 'index/...']
+    if len(parts) >= 3:
+        canonical_path = "/" + parts[2]
+        canonical = f"{parsed.scheme}://{parsed.netloc}{canonical_path}"
+        if canonical in canonical_urls:
+            return True
+    return False
+
+
 def extract_links(text: str) -> list[str]:
     """Extract hyperlinks from text — markdown links and bare URLs.
 
     Per spec §2.1 one-hop following: extract [text](url) and bare URLs.
     Deduplicates; ignores anchor-only links (#section).
+
+    Filters out non-content URLs (CSS/JS/images/fonts/CDN/hreflang alternates)
+    so one-hop slots are reserved for actual content links.
     """
-    links: list[str] = []
+    raw_links: list[str] = []
 
     # Markdown links: [text](url)
     for match in re.finditer(r"\[([^\]]*)\]\(([^)]+)\)", text):
         url = match.group(2).strip()
         if url.startswith(("http://", "https://")):
-            links.append(url)
+            raw_links.append(url)
 
     # Bare URLs
     for match in re.finditer(r"(?<![\(\[])(https?://[^\s\)\]]+)", text):
         url = match.group(1).rstrip(".,;:")
-        links.append(url)
+        raw_links.append(url)
 
-    # Deduplicate, preserve order
+    # Clean HTML attribute artifacts from all URLs
+    cleaned = [_clean_url(url) for url in raw_links]
+
+    # Deduplicate, preserve order, and filter non-content URLs
     seen: set[str] = set()
     unique: list[str] = []
-    for link in links:
-        if link not in seen:
-            seen.add(link)
-            unique.append(link)
+    for link in cleaned:
+        if not link or link in seen:
+            continue
+        if _is_non_content_url(link):
+            continue
+        if _is_hreflang_alternate(link, seen):
+            continue
+        seen.add(link)
+        unique.append(link)
     return unique
 
 
