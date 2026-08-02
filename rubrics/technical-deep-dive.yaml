@@ -1,0 +1,11 @@
+version: 1
+challenge_type: technical-deep-dive
+max_score: 3
+inherits: _base
+criteria:
+  - id: depth
+    description: "Technical explanation goes beyond surface level"
+    weight: 2
+  - id: correctness
+    description: "Technical details are accurate"
+    weight: 1

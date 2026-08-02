@@ -1,0 +1,11 @@
+version: 1
+challenge_type: scenario
+max_score: 3
+inherits: _base
+criteria:
+  - id: framework
+    description: "Applies the right concept/framework to the scenario"
+    weight: 2
+  - id: reasoning
+    description: "Reasoning is sound and traces cause to effect"
+    weight: 1

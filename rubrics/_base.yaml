@@ -1,0 +1,16 @@
+version: 1
+challenge_type: _base
+max_score: 3
+scale:
+  - label: below
+    score: 0
+    description: "Does not meet the bar — missing or incorrect core concepts"
+  - label: approaching
+    score: 1
+    description: "Partial — some correct elements but significant gaps"
+  - label: meets
+    score: 2
+    description: "Meets the bar — correct and complete for this concept level"
+  - label: exceeds
+    score: 3
+    description: "Exceeds — correct, complete, and shows deeper understanding"
