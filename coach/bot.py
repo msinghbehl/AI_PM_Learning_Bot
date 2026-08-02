@@ -128,33 +128,46 @@ async def on_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def on_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Show the user's progress — latest grades and SR state summary."""
+    """Show the user's progress — latest grades, SR state, and exit signals."""
     store: Store = context.bot_data["store"]
+    from coach.exit_tracker import compute_signals
+
+    today = _local_today()
+    signals = compute_signals(store, today)
+
+    lines = ["📊 **Progress**\n"]
+    lines.append(f"Usage: {signals.usage_answered_days}/10 answered days "
+                 f"(max {signals.usage_consecutive_misses} consecutive misses)")
+    lines.append(f"SR: {signals.sr_re_asks} re-asks, "
+                 f"{signals.sr_second_encounter_passes} second-encounter passes")
+    if signals.fairness_pass is None:
+        lines.append(f"Fairness: inconclusive ({signals.fairness_dispute_count} disputes)")
+    else:
+        lines.append(f"Fairness: {'pass' if signals.fairness_pass else 'fail'} "
+                     f"({signals.fairness_dispute_count} disputes, "
+                     f"{signals.fairness_grade_change_rate:.0%} grade-change)")
+
+    if signals.kill_triggered:
+        lines.append(f"\n⚠️ **KILL triggered**: {signals.kill_reason}")
+    if signals.fix_and_extend:
+        lines.append(f"\n🔧 Fix-and-extend: {signals.fix_and_extend_reason}")
+
+    # Show latest grade if available
     challenge = store.get_current_challenge()
     if challenge and challenge.get("answered_at"):
-        # Find the latest grade for this challenge's answer
-        rows = store.get_ungraded_answers()
-        if not rows:
-            # Check if there's a graded answer
-            from coach.store import Store as _S
-            conn = store._conn
-            row = conn.execute(
-                "SELECT g.* FROM grades g JOIN answers a ON g.answer_id = a.id "
-                "JOIN challenges c ON a.challenge_id = c.id "
-                "WHERE c.id = ? AND g.is_deferred = 0 "
-                "ORDER BY g.graded_at DESC LIMIT 1",
-                (challenge["id"],),
-            ).fetchone()
-            if row:
-                await update.message.reply_text(
-                    f"📊 Latest grade: {row['band']} (score {row['score']}/{row['score']})\n"
-                    f"Feedback: {row['feedback']}"
-                )
-                return
-    await update.message.reply_text(
-        "📊 No grades yet. Answer a challenge and check back after tonight's "
-        "grading run."
-    )
+        conn = store._conn
+        row = conn.execute(
+            "SELECT g.* FROM grades g JOIN answers a ON g.answer_id = a.id "
+            "JOIN challenges c ON a.challenge_id = c.id "
+            "WHERE c.id = ? AND g.is_deferred = 0 "
+            "ORDER BY g.graded_at DESC LIMIT 1",
+            (challenge["id"],),
+        ).fetchone()
+        if row:
+            lines.append(f"\nLatest grade: {row['band']} (score {row['score']})")
+            lines.append(f"Feedback: {row['feedback']}")
+
+    await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
 
 
 async def on_explain(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
