@@ -289,7 +289,7 @@ class TestGradeJob:
         )
 
         context = MagicMock()
-        context.bot_data = {"store": store, "grader": grader}
+        context.bot_data = {"store": store, "grader": grader, "critic": MagicMock()}
 
         await on_grade_job(context)
 
@@ -306,7 +306,116 @@ class TestGradeJob:
         store = Store(init_db(tmp_path / "test.db"))
         grader = MagicMock()
         context = MagicMock()
-        context.bot_data = {"store": store, "grader": grader}
+        context.bot_data = {"store": store, "grader": grader, "critic": MagicMock()}
 
         await on_grade_job(context)
         grader.grade.assert_not_called()
+
+
+class TestCriticIntegration:
+    @pytest.mark.asyncio
+    async def test_grade_job_defers_on_critic_disagreement(self, _reload_config, tmp_path):
+        from coach.bot import on_grade_job
+        from coach.store import Store, init_db
+        from coach.config import GradeBand, ModelName
+        from coach.critic import CriticResult
+
+        store = Store(init_db(tmp_path / "test.db"))
+        cid = store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "q", "{}",
+                                    datetime(2026, 8, 1, 7))
+        aid = store.save_answer(cid, "ans", datetime(2026, 8, 1, 12))
+
+        grader = MagicMock()
+        grader.grade.return_value = MagicMock(
+            band=GradeBand.MEETS, score=2, feedback="good",
+            rubric_id="concept-recall", model=ModelName.SONNET,
+        )
+        critic = MagicMock()
+        critic.review.return_value = CriticResult(
+            critic_grade=MagicMock(
+                band=GradeBand.BELOW, score=0, feedback="bad",
+                rubric_id="concept-recall", model=ModelName.SONNET,
+            ),
+            agrees=False, band_delta=2,
+        )
+
+        context = MagicMock()
+        context.bot_data = {"store": store, "grader": grader, "critic": critic}
+
+        await on_grade_job(context)
+
+        grades = store.get_grades_for_answer(aid)
+        assert len(grades) == 2  # grader + critic
+        # The critic grade should be deferred
+        deferred = [g for g in grades if g["is_deferred"]]
+        assert len(deferred) == 1
+        # SR state should NOT be written (interval held)
+        assert store.get_sr_state("a") is None
+
+    @pytest.mark.asyncio
+    async def test_grade_job_writes_sr_on_agreement(self, _reload_config, tmp_path):
+        from coach.bot import on_grade_job
+        from coach.store import Store, init_db
+        from coach.config import GradeBand, ModelName
+        from coach.critic import CriticResult
+
+        store = Store(init_db(tmp_path / "test.db"))
+        cid = store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "q", "{}",
+                                    datetime(2026, 8, 1, 7))
+        aid = store.save_answer(cid, "ans", datetime(2026, 8, 1, 12))
+
+        grader = MagicMock()
+        grader.grade.return_value = MagicMock(
+            band=GradeBand.MEETS, score=2, feedback="good",
+            rubric_id="concept-recall", model=ModelName.SONNET,
+        )
+        critic = MagicMock()
+        critic.review.return_value = CriticResult(
+            critic_grade=MagicMock(
+                band=GradeBand.MEETS, score=2, feedback="agree",
+                rubric_id="concept-recall", model=ModelName.SONNET,
+            ),
+            agrees=True, band_delta=0,
+        )
+
+        context = MagicMock()
+        context.bot_data = {"store": store, "grader": grader, "critic": critic}
+
+        await on_grade_job(context)
+
+        # SR state should be written
+        sr = store.get_sr_state("a")
+        assert sr is not None
+        assert sr["repetitions"] == 1
+
+
+class TestDisputeHandler:
+    @pytest.mark.asyncio
+    async def test_dispute_empty_reasoning(self, _reload_config, tmp_path):
+        from coach.bot import on_dispute
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        update = _make_update("/dispute")
+        context = MagicMock()
+        context.bot_data = {"store": store, "grader": MagicMock()}
+        context.args = []
+
+        await on_dispute(update, context)
+        reply = update.message.reply_text.call_args[0][0]
+        assert "Usage" in reply
+
+    @pytest.mark.asyncio
+    async def test_dispute_no_deferred_grades(self, _reload_config, tmp_path):
+        from coach.bot import on_dispute
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        update = _make_update("/dispute")
+        context = MagicMock()
+        context.bot_data = {"store": store, "grader": MagicMock()}
+        context.args = ["I", "disagree"]
+
+        await on_dispute(update, context)
+        reply = update.message.reply_text.call_args[0][0]
+        assert "No disputed" in reply

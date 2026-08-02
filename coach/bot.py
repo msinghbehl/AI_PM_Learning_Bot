@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import datetime as dt
 import logging
+from datetime import date
 from zoneinfo import ZoneInfo
 
 from telegram import Update
@@ -20,11 +21,13 @@ from telegram.ext import (
 
 import coach.config as config
 from coach.call_llm import AnthropicClient, CallLLM
-from coach.config import ChallengeType
+from coach.config import ChallengeType, GradeBand
 from coach.cost_ledger import CostLedger
+from coach.critic import Critic
 from coach.curriculum import load_curriculum
 from coach.grader import Grader
 from coach.lesson import LessonGenerator
+from coach.sr import initial_state, process_grade
 from coach.store import Store
 
 logging.basicConfig(
@@ -168,29 +171,154 @@ async def on_explain(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
 async def on_grade_job(context: ContextTypes.DEFAULT_TYPE) -> None:
     """Scheduled 11pm grade job — grades all ungraded answers via Sonnet.
 
+    Per #6: the critic re-grades every answer. ≥1-band disagreement flags +
+    defers (neither score writes to SR; interval held). On agreement, the grade
+    writes to SR via SM-2.
+
     Skip-if-asleep is handled by JobQueue (same as the push job).
     """
     store: Store = context.bot_data["store"]
     grader: Grader = context.bot_data["grader"]
+    critic: Critic = context.bot_data["critic"]
     ungraded = store.get_ungraded_answers()
     if not ungraded:
         return
 
+    today = _local_today()
+
     for ans in ungraded:
-        result = grader.grade(
+        grade = grader.grade(
             challenge_text=ans["challenge_text"],
             challenge_type=ChallengeType(ans["challenge_type"]),
             answer_text=ans["answer_text"],
         )
-        store.save_grade(
+        # Save the grader's grade
+        grade_id = store.save_grade(
             answer_id=ans["id"],
-            grader_model=result.model,
-            band=result.band,
-            score=result.score,
-            feedback=result.feedback,
-            rubric_id=result.rubric_id,
+            grader_model=grade.model,
+            band=grade.band,
+            score=grade.score,
+            feedback=grade.feedback,
+            rubric_id=grade.rubric_id,
             graded_at=dt.datetime.now(TZ),
         )
+
+        # Critic re-grade
+        review = critic.review(
+            challenge_text=ans["challenge_text"],
+            challenge_type=ChallengeType(ans["challenge_type"]),
+            answer_text=ans["answer_text"],
+            original_grade=grade,
+        )
+
+        if review.agrees:
+            # Write to SR via SM-2
+            _update_sr(store, ans["concept_node_id"], grade.band, today)
+        else:
+            # Flag + defer: mark the grade as deferred, hold the SR interval
+            store.save_grade(
+                answer_id=ans["id"],
+                grader_model=review.critic_grade.model,
+                band=review.critic_grade.band,
+                score=review.critic_grade.score,
+                feedback=review.critic_grade.feedback,
+                rubric_id=review.critic_grade.rubric_id,
+                graded_at=dt.datetime.now(TZ),
+                is_critic=True,
+                is_deferred=True,
+            )
+            log.info(
+                "grade deferred for answer %d: grader=%s critic=%s delta=%d",
+                ans["id"], grade.band.value, review.critic_grade.band.value,
+                review.band_delta,
+            )
+
+
+def _update_sr(store: Store, concept_node_id: str, band: GradeBand, today) -> None:
+    """Update SM-2 state for a concept after a resolved grade."""
+    from coach.config import Difficulty
+    from coach.sr import SRState
+    raw = store.get_sr_state(concept_node_id)
+    if raw is None:
+        state = initial_state(Difficulty.MEDIUM, today)
+    else:
+        state = SRState(
+            ease=raw["ease"],
+            interval_days=raw["interval_days"],
+            repetitions=raw["repetitions"],
+            due_date=date.fromisoformat(raw["due_date"]),
+            difficulty=Difficulty(raw["difficulty"]),
+            last_grade_band=GradeBand(raw["last_grade_band"]) if raw["last_grade_band"] else None,
+        )
+    new_state = process_grade(state, band, today)
+    store.upsert_sr_state(
+        concept_node_id=concept_node_id,
+        ease=new_state.ease,
+        interval_days=new_state.interval_days,
+        repetitions=new_state.repetitions,
+        due_date=new_state.due_date,
+        difficulty=new_state.difficulty,
+        last_grade_band=new_state.last_grade_band.value if new_state.last_grade_band else None,
+    )
+
+
+async def on_dispute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Dispute a grade — feeds reasoning as a claim to verify against the rubric.
+
+    Per #6: one re-grade call, resolved score writes to SR, dispute logged.
+    """
+    store: Store = context.bot_data["store"]
+    grader: Grader = context.bot_data["grader"]
+
+    reasoning = " ".join(context.args) if context.args else ""
+    if not reasoning:
+        await update.message.reply_text("Usage: /dispute <your reasoning>")
+        return
+
+    # Find the most recent deferred grade for the latest answered challenge
+    conn = store._conn
+    row = conn.execute(
+        "SELECT g.*, a.answer_text, c.challenge_text, c.challenge_type, "
+        "c.concept_node_id FROM grades g "
+        "JOIN answers a ON g.answer_id = a.id "
+        "JOIN challenges c ON a.challenge_id = c.id "
+        "WHERE g.is_deferred = 1 "
+        "ORDER BY g.graded_at DESC LIMIT 1"
+    ).fetchone()
+    if row is None:
+        await update.message.reply_text(
+            "No disputed grades to resolve. Grades must be deferred first."
+        )
+        return
+
+    # Re-grade with the dispute reasoning as additional context
+    re_grade = grader.grade(
+        challenge_text=row["challenge_text"],
+        challenge_type=ChallengeType(row["challenge_type"]),
+        answer_text=row["answer_text"] + "\n\nDispute reasoning: " + reasoning,
+    )
+
+    # Resolve: write the resolved score to SR
+    _update_sr(store, row["concept_node_id"], re_grade.band, _local_today())
+
+    # Save the resolved grade (not deferred)
+    store.save_grade(
+        answer_id=row["answer_id"],
+        grader_model=re_grade.model,
+        band=re_grade.band,
+        score=re_grade.score,
+        feedback=re_grade.feedback,
+        rubric_id=re_grade.rubric_id,
+        graded_at=dt.datetime.now(TZ),
+    )
+
+    # Log the dispute
+    store.save_dispute(row["id"], reasoning, dt.datetime.now(TZ))
+
+    await update.message.reply_text(
+        f"⚖️ Dispute resolved. New grade: {re_grade.band.value} "
+        f"(score {re_grade.score}). SR updated."
+    )
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -227,6 +355,7 @@ def build_app() -> Application:
     generator = LessonGenerator(call_llm, nodes)
     store = Store.open(config.DATABASE_PATH)
     grader = Grader(call_llm, config.RUBRICS_DIR)
+    critic = Critic(grader)
 
     app: Application = (
         ApplicationBuilder()
@@ -239,6 +368,7 @@ def build_app() -> Application:
     app.bot_data["cost_ledger"] = ledger
     app.bot_data["store"] = store
     app.bot_data["grader"] = grader
+    app.bot_data["critic"] = critic
 
     owner_only = filters.User(user_id=owner)
 
@@ -247,6 +377,7 @@ def build_app() -> Application:
     app.add_handler(CommandHandler("answer", on_answer, filters=owner_only))
     app.add_handler(CommandHandler("stats", on_stats, filters=owner_only))
     app.add_handler(CommandHandler("explain", on_explain, filters=owner_only))
+    app.add_handler(CommandHandler("dispute", on_dispute, filters=owner_only))
     app.add_error_handler(on_error)
 
     # 7am Pacific push job — skip-if-asleep (JobQueue default: no catch-up).
