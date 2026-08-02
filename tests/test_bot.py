@@ -104,10 +104,10 @@ class TestBuildApp:
 
 class TestTodayHandler:
     @pytest.mark.asyncio
-    async def test_today_sends_lesson_with_all_parts(self, _reload_config):
+    async def test_today_sends_lesson_with_all_parts(self, _reload_config, tmp_path):
         from coach.bot import on_today
         from coach.lesson import Lesson
-        from coach.config import ChallengeType
+        from coach.store import Store, init_db
 
         lesson = Lesson(
             pm_concept="Prioritization",
@@ -118,9 +118,10 @@ class TestTodayHandler:
             concept_gap="AI technical fluency",
             concept_source=[{"url": "https://x.com", "type": "report"}],
         )
+        store = Store(init_db(tmp_path / "test.db"))
         update = _make_update("/today")
         context = MagicMock()
-        context.bot_data = {"lesson_generator": MagicMock()}
+        context.bot_data = {"lesson_generator": MagicMock(), "store": store}
         context.bot_data["lesson_generator"].generate.return_value = lesson
 
         await on_today(update, context)
@@ -133,10 +134,10 @@ class TestTodayHandler:
         assert "/answer" in reply
 
     @pytest.mark.asyncio
-    async def test_today_stores_lesson_in_bot_data(self, _reload_config):
+    async def test_today_stores_lesson_in_bot_data(self, _reload_config, tmp_path):
         from coach.bot import on_today
         from coach.lesson import Lesson
-        from coach.config import ChallengeType
+        from coach.store import Store, init_db
 
         lesson = Lesson(
             pm_concept="p", ai_concept="a", challenge="c",
@@ -144,9 +145,10 @@ class TestTodayHandler:
             concept_node_id="ai-fluency/test", concept_gap="AI technical fluency",
             concept_source=[],
         )
+        store = Store(init_db(tmp_path / "test.db"))
         update = _make_update("/today")
         context = MagicMock()
-        context.bot_data = {"lesson_generator": MagicMock()}
+        context.bot_data = {"lesson_generator": MagicMock(), "store": store}
         context.bot_data["lesson_generator"].generate.return_value = lesson
 
         await on_today(update, context)

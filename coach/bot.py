@@ -10,6 +10,7 @@ JobQueue run_daily for scheduled jobs.
 from __future__ import annotations
 
 import datetime as dt
+import json
 import logging
 from datetime import date
 from zoneinfo import ZoneInfo
@@ -72,8 +73,16 @@ def _format_lesson(lesson) -> str:
 async def on_today(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Generate and send today's lesson on demand."""
     gen: LessonGenerator = context.bot_data["lesson_generator"]
+    store: Store = context.bot_data["store"]
     lesson = gen.generate()
     context.bot_data["current_lesson"] = lesson
+    # Persist the challenge so /answer can reference it.
+    challenge_id = store.save_challenge(
+        lesson.concept_node_id, lesson.challenge_type, lesson.challenge,
+        json.dumps({"pm_concept": lesson.pm_concept, "ai_concept": lesson.ai_concept}),
+        dt.datetime.now(TZ),
+    )
+    context.bot_data["current_challenge_id"] = challenge_id
     await update.message.reply_text(_format_lesson(lesson), parse_mode="Markdown")
 
 
@@ -88,10 +97,9 @@ async def on_push_job(context: ContextTypes.DEFAULT_TYPE) -> None:
     lesson = gen.generate()
     context.bot_data["current_lesson"] = lesson
     # Persist the challenge so /answer can reference it.
-    import json as _json
     challenge_id = store.save_challenge(
         lesson.concept_node_id, lesson.challenge_type, lesson.challenge,
-        _json.dumps({"pm_concept": lesson.pm_concept,
+        json.dumps({"pm_concept": lesson.pm_concept,
                     "ai_concept": lesson.ai_concept}),
         dt.datetime.now(TZ),
     )
@@ -155,14 +163,7 @@ async def on_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Show latest grade if available
     challenge = store.get_current_challenge()
     if challenge and challenge.get("answered_at"):
-        conn = store._conn
-        row = conn.execute(
-            "SELECT g.* FROM grades g JOIN answers a ON g.answer_id = a.id "
-            "JOIN challenges c ON a.challenge_id = c.id "
-            "WHERE c.id = ? AND g.is_deferred = 0 "
-            "ORDER BY g.graded_at DESC LIMIT 1",
-            (challenge["id"],),
-        ).fetchone()
+        row = store.get_latest_grade_for_challenge(challenge["id"])
         if row:
             lines.append(f"\nLatest grade: {row['band']} (score {row['score']})")
             lines.append(f"Feedback: {row['feedback']}")
@@ -289,26 +290,19 @@ async def on_dispute(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         return
 
     # Find the most recent deferred grade for the latest answered challenge
-    conn = store._conn
-    row = conn.execute(
-        "SELECT g.*, a.answer_text, c.challenge_text, c.challenge_type, "
-        "c.concept_node_id FROM grades g "
-        "JOIN answers a ON g.answer_id = a.id "
-        "JOIN challenges c ON a.challenge_id = c.id "
-        "WHERE g.is_deferred = 1 "
-        "ORDER BY g.graded_at DESC LIMIT 1"
-    ).fetchone()
+    row = store.get_latest_deferred_grade()
     if row is None:
         await update.message.reply_text(
             "No disputed grades to resolve. Grades must be deferred first."
         )
         return
 
-    # Re-grade with the dispute reasoning as additional context
+    # Re-grade with the dispute reasoning as a separate claim to verify
     re_grade = grader.grade(
         challenge_text=row["challenge_text"],
         challenge_type=ChallengeType(row["challenge_type"]),
-        answer_text=row["answer_text"] + "\n\nDispute reasoning: " + reasoning,
+        answer_text=row["answer_text"],
+        dispute_reasoning=reasoning,
     )
 
     # Resolve: write the resolved score to SR

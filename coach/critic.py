@@ -51,13 +51,8 @@ class Critic:
             challenge_type=challenge_type,
             answer_text=answer_text,
             caps=caps,
+            purpose="critic",
         )
-        # Override the purpose marker — the grader sets "grade"; critic needs "critic"
-        # for cost-ledger routing. We re-grade via the grader but the call_llm
-        # wrapper already logged it as "grade". The critic protection comes from
-        # the fallback ladder checking purpose=="critic" — so we pass it through
-        # the grader which uses purpose="grade". For Phase 1, the critic re-grade
-        # is a second independent grade call; the band comparison is the gate.
         band_delta = abs(_band_to_int(critic_grade.band) - _band_to_int(original_grade.band))
         agrees = band_delta == 0
 

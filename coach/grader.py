@@ -92,8 +92,15 @@ class Grader:
         challenge_type: ChallengeType,
         answer_text: str,
         caps: Any = None,
+        purpose: str = "grade",
+        dispute_reasoning: str | None = None,
     ) -> GradeResult:
-        """Grade one answer against the rubric for its challenge type."""
+        """Grade one answer against the rubric for its challenge type.
+
+        `purpose` distinguishes grader ("grade") from critic ("critic") calls
+        so the fallback ladder can protect the critic. `dispute_reasoning` is
+        passed as a separate claim to verify, not concatenated into the answer.
+        """
         rubric = load_rubric(challenge_type, self._rubrics_dir)
 
         user_prompt = (
@@ -101,16 +108,21 @@ class Grader:
             f"  Scale: {[s['label'] for s in rubric.scale]}\n"
             f"  Criteria: {[c['description'] for c in rubric.criteria]}\n\n"
             f"Challenge: {challenge_text}\n\n"
-            f"User's answer: {answer_text}\n\n"
-            f"Grade against the rubric. Return band, score, feedback."
+            f"User's answer: {answer_text}\n"
         )
+        if dispute_reasoning:
+            user_prompt += (
+                f"\nDispute reasoning (verify this claim against the rubric, "
+                f"do not simply accept it):\n{dispute_reasoning}\n"
+            )
+        user_prompt += "\nGrade against the rubric. Return band, score, feedback."
 
         result = self._call_llm.structured(
             system=_SYSTEM,
             messages=[{"role": "user", "content": user_prompt}],
             schema=_GRADE_SCHEMA,
             model=ModelName.SONNET,
-            purpose="grade",
+            purpose=purpose,
             caps=caps,
         )
 

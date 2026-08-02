@@ -220,6 +220,29 @@ class Store:
         ).fetchone()
         return dict(row) if row else None
 
+    def get_latest_grade_for_challenge(self, challenge_id: int) -> dict[str, Any] | None:
+        """Return the latest non-deferred grade for a challenge's answer."""
+        row = self._conn.execute(
+            "SELECT g.* FROM grades g JOIN answers a ON g.answer_id = a.id "
+            "JOIN challenges c ON a.challenge_id = c.id "
+            "WHERE c.id = ? AND g.is_deferred = 0 "
+            "ORDER BY g.graded_at DESC LIMIT 1",
+            (challenge_id,),
+        ).fetchone()
+        return dict(row) if row else None
+
+    def get_latest_deferred_grade(self) -> dict[str, Any] | None:
+        """Return the most recent deferred grade with its answer/challenge context."""
+        row = self._conn.execute(
+            "SELECT g.*, a.answer_text, c.challenge_text, c.challenge_type, "
+            "c.concept_node_id FROM grades g "
+            "JOIN answers a ON g.answer_id = a.id "
+            "JOIN challenges c ON a.challenge_id = c.id "
+            "WHERE g.is_deferred = 1 "
+            "ORDER BY g.graded_at DESC LIMIT 1"
+        ).fetchone()
+        return dict(row) if row else None
+
     # --- SR state ---
 
     def get_sr_state(self, concept_node_id: str) -> dict[str, Any] | None:
