@@ -6,6 +6,7 @@ Telegram send is mocked at the boundary (we assert on reply_text calls).
 from __future__ import annotations
 
 import importlib
+from datetime import datetime
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -14,6 +15,7 @@ from telegram import Update
 from telegram.ext import Application
 
 import coach.config as config
+from coach.config import ChallengeType
 
 
 @pytest.fixture(autouse=True)
@@ -74,7 +76,8 @@ class TestBuildApp:
         app = build_app()
         # The handlers dict should have at least one CommandHandler for "start"
         handler_groups = app.handlers
-        all_handlers = [h for handlers in handler_groups.values() for h in handlers]
+        all_handlers = [h for handlers in handler_groups.values()
+                        for h in handlers]
         start_handlers = [
             h for h in all_handlers
             if hasattr(h, "commands") and "start" in h.commands
@@ -85,7 +88,8 @@ class TestBuildApp:
         from coach.bot import build_app
         app = build_app()
         handler_groups = app.handlers
-        all_handlers = [h for handlers in handler_groups.values() for h in handlers]
+        all_handlers = [h for handlers in handler_groups.values()
+                        for h in handlers]
         today_handlers = [
             h for h in all_handlers
             if hasattr(h, "commands") and "today" in h.commands
@@ -151,10 +155,10 @@ class TestTodayHandler:
 
 class TestPushJob:
     @pytest.mark.asyncio
-    async def test_push_job_sends_lesson_to_owner(self, _reload_config):
+    async def test_push_job_sends_lesson_to_owner(self, _reload_config, tmp_path):
         from coach.bot import on_push_job
         from coach.lesson import Lesson
-        from coach.config import ChallengeType
+        from coach.store import Store, init_db
 
         lesson = Lesson(
             pm_concept="p", ai_concept="a", challenge="c",
@@ -162,8 +166,9 @@ class TestPushJob:
             concept_node_id="ai-fluency/test", concept_gap="AI technical fluency",
             concept_source=[],
         )
+        store = Store(init_db(tmp_path / "test.db"))
         context = MagicMock()
-        context.bot_data = {"lesson_generator": MagicMock()}
+        context.bot_data = {"lesson_generator": MagicMock(), "store": store}
         context.bot_data["lesson_generator"].generate.return_value = lesson
         context.bot.send_message = AsyncMock()
 
@@ -173,3 +178,135 @@ class TestPushJob:
         text = context.bot.send_message.call_args[1]["text"]
         assert "Today's Lesson" in text
         assert context.bot_data["current_lesson"] is lesson
+
+
+class TestAnswerHandler:
+    @pytest.mark.asyncio
+    async def test_answer_stores_answer_for_current_challenge(self, _reload_config, tmp_path):
+        from coach.bot import on_answer
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        cid = store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "q", "{}",
+                                    datetime(2026, 8, 1, 7))
+
+        update = _make_update("/answer my response")
+        context = MagicMock()
+        context.bot_data = {"store": store}
+        context.args = ["my", "response"]
+
+        await on_answer(update, context)
+
+        update.message.reply_text.assert_called_once()
+        reply = update.message.reply_text.call_args[0][0]
+        assert "recorded" in reply.lower()
+        ch = store.get_challenge(cid)
+        assert ch["answered_at"] is not None
+
+    @pytest.mark.asyncio
+    async def test_answer_no_active_challenge(self, _reload_config, tmp_path):
+        from coach.bot import on_answer
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        update = _make_update("/answer something")
+        context = MagicMock()
+        context.bot_data = {"store": store}
+        context.args = ["something"]
+
+        await on_answer(update, context)
+        reply = update.message.reply_text.call_args[0][0]
+        assert "No active challenge" in reply
+
+    @pytest.mark.asyncio
+    async def test_answer_empty_text(self, _reload_config, tmp_path):
+        from coach.bot import on_answer
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "q", "{}",
+                             datetime(2026, 8, 1, 7))
+        update = _make_update("/answer")
+        context = MagicMock()
+        context.bot_data = {"store": store}
+        context.args = []
+
+        await on_answer(update, context)
+        reply = update.message.reply_text.call_args[0][0]
+        assert "Usage" in reply
+
+
+class TestExplainHandler:
+    @pytest.mark.asyncio
+    async def test_explain_resurfaces_lesson(self, _reload_config):
+        from coach.bot import on_explain
+        from coach.lesson import Lesson
+
+        lesson = Lesson(
+            pm_concept="p", ai_concept="a", challenge="c",
+            challenge_type=ChallengeType.SCENARIO,
+            concept_node_id="ai-fluency/test", concept_gap="AI technical fluency",
+            concept_source=[],
+        )
+        update = _make_update("/explain")
+        context = MagicMock()
+        context.bot_data = {"current_lesson": lesson}
+
+        await on_explain(update, context)
+        update.message.reply_text.assert_called_once()
+        reply = update.message.reply_text.call_args[0][0]
+        assert "Today's Lesson" in reply
+
+    @pytest.mark.asyncio
+    async def test_explain_no_lesson(self, _reload_config):
+        from coach.bot import on_explain
+
+        update = _make_update("/explain")
+        context = MagicMock()
+        context.bot_data = {}
+
+        await on_explain(update, context)
+        reply = update.message.reply_text.call_args[0][0]
+        assert "No lesson" in reply
+
+
+class TestGradeJob:
+    @pytest.mark.asyncio
+    async def test_grade_job_grades_ungraded_answers(self, _reload_config, tmp_path):
+        from coach.bot import on_grade_job
+        from coach.store import Store, init_db
+        from coach.config import GradeBand, ModelName
+
+        store = Store(init_db(tmp_path / "test.db"))
+        cid = store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "What is RAG?", "{}",
+                                    datetime(2026, 8, 1, 7))
+        aid = store.save_answer(cid, "RAG retrieves chunks", datetime(2026, 8, 1, 12))
+
+        grader = MagicMock()
+        grader.grade.return_value = MagicMock(
+            band=GradeBand.MEETS, score=2, feedback="good",
+            rubric_id="concept-recall", model=ModelName.SONNET,
+        )
+
+        context = MagicMock()
+        context.bot_data = {"store": store, "grader": grader}
+
+        await on_grade_job(context)
+
+        grader.grade.assert_called_once()
+        grades = store.get_grades_for_answer(aid)
+        assert len(grades) == 1
+        assert grades[0]["band"] == "meets"
+
+    @pytest.mark.asyncio
+    async def test_grade_job_no_ungraded_does_nothing(self, _reload_config, tmp_path):
+        from coach.bot import on_grade_job
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        grader = MagicMock()
+        context = MagicMock()
+        context.bot_data = {"store": store, "grader": grader}
+
+        await on_grade_job(context)
+        grader.grade.assert_not_called()

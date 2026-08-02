@@ -20,9 +20,12 @@ from telegram.ext import (
 
 import coach.config as config
 from coach.call_llm import AnthropicClient, CallLLM
+from coach.config import ChallengeType
 from coach.cost_ledger import CostLedger
 from coach.curriculum import load_curriculum
+from coach.grader import Grader
 from coach.lesson import LessonGenerator
+from coach.store import Store
 
 logging.basicConfig(
     format="%(asctime)s %(name)s %(levelname)s %(message)s", level=logging.INFO
@@ -78,13 +81,116 @@ async def on_push_job(context: ContextTypes.DEFAULT_TYPE) -> None:
     the job is skipped with no catch-up (run_daily default behavior).
     """
     gen: LessonGenerator = context.bot_data["lesson_generator"]
+    store: Store = context.bot_data["store"]
     lesson = gen.generate()
     context.bot_data["current_lesson"] = lesson
+    # Persist the challenge so /answer can reference it.
+    import json as _json
+    challenge_id = store.save_challenge(
+        lesson.concept_node_id, lesson.challenge_type, lesson.challenge,
+        _json.dumps({"pm_concept": lesson.pm_concept,
+                    "ai_concept": lesson.ai_concept}),
+        dt.datetime.now(TZ),
+    )
+    context.bot_data["current_challenge_id"] = challenge_id
     await context.bot.send_message(
         chat_id=config.owner_id(),
         text=_format_lesson(lesson),
         parse_mode="Markdown",
     )
+
+
+async def on_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Store the user's answer against the current challenge."""
+    store: Store = context.bot_data["store"]
+    challenge = store.get_current_challenge()
+    if challenge is None:
+        await update.message.reply_text(
+            "No active challenge. Use /today to get one."
+        )
+        return
+
+    answer_text = " ".join(context.args) if context.args else ""
+    if not answer_text:
+        await update.message.reply_text(
+            "Usage: /answer <your answer>"
+        )
+        return
+
+    store.save_answer(challenge["id"], answer_text, dt.datetime.now(TZ))
+    await update.message.reply_text(
+        "✅ Answer recorded. I'll grade it tonight and you'll see the result "
+        "in /stats tomorrow."
+    )
+
+
+async def on_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Show the user's progress — latest grades and SR state summary."""
+    store: Store = context.bot_data["store"]
+    challenge = store.get_current_challenge()
+    if challenge and challenge.get("answered_at"):
+        # Find the latest grade for this challenge's answer
+        rows = store.get_ungraded_answers()
+        if not rows:
+            # Check if there's a graded answer
+            from coach.store import Store as _S
+            conn = store._conn
+            row = conn.execute(
+                "SELECT g.* FROM grades g JOIN answers a ON g.answer_id = a.id "
+                "JOIN challenges c ON a.challenge_id = c.id "
+                "WHERE c.id = ? AND g.is_deferred = 0 "
+                "ORDER BY g.graded_at DESC LIMIT 1",
+                (challenge["id"],),
+            ).fetchone()
+            if row:
+                await update.message.reply_text(
+                    f"📊 Latest grade: {row['band']} (score {row['score']}/{row['score']})\n"
+                    f"Feedback: {row['feedback']}"
+                )
+                return
+    await update.message.reply_text(
+        "📊 No grades yet. Answer a challenge and check back after tonight's "
+        "grading run."
+    )
+
+
+async def on_explain(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Re-surface the lesson text for the current concept."""
+    lesson = context.bot_data.get("current_lesson")
+    if lesson is None:
+        await update.message.reply_text(
+            "No lesson loaded. Use /today to get one."
+        )
+        return
+    await update.message.reply_text(_format_lesson(lesson), parse_mode="Markdown")
+
+
+async def on_grade_job(context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Scheduled 11pm grade job — grades all ungraded answers via Sonnet.
+
+    Skip-if-asleep is handled by JobQueue (same as the push job).
+    """
+    store: Store = context.bot_data["store"]
+    grader: Grader = context.bot_data["grader"]
+    ungraded = store.get_ungraded_answers()
+    if not ungraded:
+        return
+
+    for ans in ungraded:
+        result = grader.grade(
+            challenge_text=ans["challenge_text"],
+            challenge_type=ChallengeType(ans["challenge_type"]),
+            answer_text=ans["answer_text"],
+        )
+        store.save_grade(
+            answer_id=ans["id"],
+            grader_model=result.model,
+            band=result.band,
+            score=result.score,
+            feedback=result.feedback,
+            rubric_id=result.rubric_id,
+            graded_at=dt.datetime.now(TZ),
+        )
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -119,6 +225,8 @@ def build_app() -> Application:
     client = AnthropicClient(config.ANTHROPIC_API_KEY)
     call_llm = CallLLM(client, ledger)
     generator = LessonGenerator(call_llm, nodes)
+    store = Store.open(config.DATABASE_PATH)
+    grader = Grader(call_llm, config.RUBRICS_DIR)
 
     app: Application = (
         ApplicationBuilder()
@@ -129,17 +237,27 @@ def build_app() -> Application:
     app.bot_data["lesson_generator"] = generator
     app.bot_data["call_llm"] = call_llm
     app.bot_data["cost_ledger"] = ledger
+    app.bot_data["store"] = store
+    app.bot_data["grader"] = grader
 
     owner_only = filters.User(user_id=owner)
 
     app.add_handler(CommandHandler("start", on_start, filters=owner_only))
     app.add_handler(CommandHandler("today", on_today, filters=owner_only))
+    app.add_handler(CommandHandler("answer", on_answer, filters=owner_only))
+    app.add_handler(CommandHandler("stats", on_stats, filters=owner_only))
+    app.add_handler(CommandHandler("explain", on_explain, filters=owner_only))
     app.add_error_handler(on_error)
 
     # 7am Pacific push job — skip-if-asleep (JobQueue default: no catch-up).
     app.job_queue.run_daily(
         on_push_job,
         time=dt.time(hour=config.PUSH_HOUR, tzinfo=TZ),
+    )
+    # 11pm Pacific grade job — skip-if-asleep.
+    app.job_queue.run_daily(
+        on_grade_job,
+        time=dt.time(hour=config.GRADE_HOUR, tzinfo=TZ),
     )
 
     return app

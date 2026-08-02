@@ -1,0 +1,11 @@
+version: 1
+challenge_type: concept-recall
+max_score: 3
+inherits: _base
+criteria:
+  - id: accuracy
+    description: "Core concept is stated correctly"
+    weight: 2
+  - id: completeness
+    description: "Key trade-offs or nuances are included"
+    weight: 1
