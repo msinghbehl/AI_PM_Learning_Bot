@@ -1,0 +1,2242 @@
+- id: ai-fluency/foundation-vs-finetuned
+  gap: AI technical fluency
+  concept: "Understanding the difference between pretrained foundation models and task-specific fine-tuned variants, and their respective trade-offs"
+  difficulty: medium
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Fine-Tuning excels at adapting a model to highly specialized domain-specific syntax, formatting requirements, and complex reasoning styles"
+    - url: sources/GenerativeAICourse/lessons/01_intro_to_ai.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "With AI models like ChatGPT, the model is trained using a supervised model where it is trained on millions of labeled data like books or websites. The model then uses reinforcement learning where it generates multiple possible responses to a given prompt, and these responses are rated based on how helpful or accurate they are either by humans or by another AI system."
+    - url: sources/GenerativeAICourse/lessons/03_LLMs_deepdive.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "General purpose foundational models can be great for everyday tasks, but might struggle with domain-specific tasks"
+    - url: sources/GenerativeAICourse/lessons/21_future.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Shift from giant general models to: domain-specific models, task-optimized architectures, edge deployment"
+    - url: sources/GenerativeAICourse_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "AI engineering is less about training models and more about adapting them (e.g. prompt engineering, fine-tuning)"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "PRIMARY sources (model creators + cited arXiv)"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "fine-tuning, RAG, AI agents, AI prototyping"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-aimpm-share-7434920388750598144-9O1s
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Learn RAG, fine-tuning, evals, and agentic AI"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-freecourses-share-7439645289273262081-nNd7
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Generative AI: https://lnkd.in/dpkZWbv2"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-aipm-ai-share-7470776771680931840-on2g
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Next, for most PMs, it makes no sense to dive deep into statistics, Python, or loss functions. Instead, read about Transformers, and LLMs"
+    - url: https://www.linkedin.com/posts/productfaculty_if-i-wanted-to-become-a-top-01-agentic-share-7479542633200250880--DZF
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Foundational LLM knowledge you need"
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "You need to understand where AI is just ML, vs when you actually need an LLM."
+    - url: sources/linkedin_resources/ai_pm_skills/12-month-ai-pm-technical-plan.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Generative AI"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "How an LLM actually works"
+    - url: https://www.latent.space
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "How leading labs build Agents, Models, Infra, & AI for Science"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-ml-llm-rag-agents-5-layer-map.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "The five words are layers of one system."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-8-pillars.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "You need to understand where AI is just ML, vs when you actually need an LLM."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-9-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Picking the wrong model can sink your product. Choose well."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-resources-6-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Start with what an AI PM is"
+    - url: https://bit.ly/3EZtCLs
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Generative AI, which is a type of AI that can create new content based on the data it's been trained on"
+    - url: https://bit.ly/pcprompts
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Pretrained foundation models vs task-specific fine-tuned models"
+    - url: https://bit.ly/pcfinetune
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Start with understanding what an AI Product Manager is."
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "When to fine-tune vs prompt vs RAG"
+    - url: sources/linkedin_resources/ai_pm_skills/glossary-of-ai-pm-19-topics.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Models — Choose the right tool"
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Experience with Generative AI or LLMs"
+    - url: sources/linkedin_resources/career_advice/pawel-huryn-ai-salaries.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Experience with Generative AI or LLMs"
+    - url: sources/linkedin_resources/free_resources/10-github-repos-better-than-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "LLMs from first principles"
+    - url: sources/linkedin_resources/free_resources/anthropic-13-free-ai-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Master the core mechanics of integrating Anthropic's models."
+    - url: sources/linkedin_resources/free_resources/jay-alammar-llm-repo-6-months-saved.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Foundation → Advanced"
+    - url: sources/linkedin_resources/free_resources/perfect-ai-roadmap-one-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Multimodal and reasoning LLMs"
+    - url: https://lnkd.in/gy6yRDQ7
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Understanding Large Language Models"
+    - url: sources/linkedin_resources/free_resources/stanford-free-ai-education-youtube.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Supervised/unsupervised learning + deep dive into algorithms"
+    - url: sources/linkedin_resources/free_resources/sumon-kabir-prompt-engineering.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prompt Engineering 101"
+    - url: https://github.com/microsoft/generative-ai-for-beginners
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "21 Lessons, Get Started Building with Generative AI"
+    - url: https://www.anthropic.com/claude
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Claude is Anthropic's AI, built for problem solvers. Tackle complex challenges, analyze data, write code, and think through your hardest work."
+    - url: https://arxiv.org/abs/1706.03762
+      type: paper
+      accessed_at: 2026-08-01
+      anchor: "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data."
+    - url: https://arxiv.org/abs/2203.02155
+      type: paper
+      accessed_at: 2026-08-01
+      anchor: "Making language models bigger does not inherently make them better at following a user's intent."
+    - url: https://deepmind.google/models/gemini/
+      type: model-card
+      accessed_at: 2026-08-01
+      anchor: "Our latest series of Gemini models combine frontier intelligence with action. Built to help you execute complex, multi-step workflows."
+    - url: https://openai.com/research/gpt-4
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "GPT-4 is a large multimodal model (accepting image and text inputs, emitting text outputs)"
+  related_gaps: []
+  prerequisites: []
+  challenge_types: [concept-recall, scenario]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 10 primary, 11 secondary, 18 tertiary
+  # critic: stability-recency: stability: foundational
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/context-windows
+  gap: AI technical fluency
+  concept: "What a context window is, how it constrains model behavior, and why context windows have grown exponentially"
+  difficulty: easy
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Google DeepMind's Gemini 1.5 Pro variant utilizes a highly compute-efficient Mixture-of-Experts architecture that processes an exceptionally large context window of up to one million tokens"
+    - url: https://www.kunalganglani.com/blog/llm-wiki-karpathy-local-knowledge-base
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "At roughly 150-200 pages, most agents can't hold the full wiki in context."
+    - url: https://atlan.com/know/llm-wiki-vs-rag-knowledge-base/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "sized to fit within the model's context window"
+    - url: https://www.epsilla.com/blogs/llm-wiki-kills-rag-karpathy-enterprise-semantic-graph
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "stuff into the model's context window"
+    - url: sources/GenerativeAICourse/lessons/09_RAG.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "There is a limitation on the context window, and if the data exceeds that, which in most cases it will, then we divide it into chunks."
+    - url: sources/GenerativeAICourse/lessons/11_Agents.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "We've explored solutions like RAG and long context windows, and there's ongoing development like Talk agents."
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "google-gemini-report.url      ← Gemini (MoE, long context, multimodal)"
+    - url: https://europe-west1-rag-techniques-views-tracker.cloudfunctions.net/rag-techniques-tracker?notebook=agents-towards-production--readme&click=course-free-module-cta&target=https%3A%2F%2Fwww.diamant-ai.com%2Fcourses%3Futm_source%3Dgithub%26utm_medium%3Dreadme%26utm_campaign%3Dagents-towards-production&retarget=0&text=course-free-module-cta
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "specs the AI reads, context engineering, a repeatable build method, testing and security gates"
+    - url: https://diamant-ai.com/courses
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Seventeen modules, one real project: you write the specs the AI reads, drive it well, harden the build"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "1M context, agentic benchmarks"
+    - url: https://www.linkedin.com/posts/pawel-huryn_900k-total-for-ai-pms-at-openai-meta-share-7435020927710658560-OY59
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Context Engineering for PMs"
+    - url: https://www.linkedin.com/posts/enzoa_claude-code-is-exploding-right-now-people-share-7437528894586605568-7kd0
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "All inside one chat."
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Context Engineering Guide"
+    - url: sources/linkedin_resources/ai_pm_skills/15-free-resources-ai-native-pm.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Context Engineering Masterclass"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Tokens, context windows, and why it hallucinates."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-8-pillars.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Context Engineering Guide"
+    - url: https://bit.ly/pcprompts
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "What a context window is, why it grew"
+    - url: https://bit.ly/pcfinetune
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "What a context window is, why it grew"
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "What a context window is, why it grew"
+    - url: sources/linkedin_resources/ai_pm_skills/glossary-of-ai-pm-19-topics.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Context Management — Maximize information quality"
+    - url: sources/linkedin_resources/ai_pm_skills/karpathy-agents-as-distribution-channel.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "85% of enterprises are expected to have AI agents deployed. Those agents need structured, programmatic access to your product."
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Context Engineering for PMs"
+    - url: sources/linkedin_resources/career_advice/pawel-huryn-ai-salaries.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Context Engineering for PMs"
+    - url: sources/linkedin_resources/claude_code/complete-claude-ai-learning-document.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Claude FULL COURSE 1 HOUR (Build & Automate Anything)"
+    - url: sources/linkedin_resources/claude_code/two-types-of-pms-claude-code-os.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "His feedback analysis runs across Zendesk, Gong, Salesforce, Slack, and app stores in a single prompt"
+    - url: sources/linkedin_resources/free_resources/simon-willison-gpt5-family.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "All three models have: A February 16th 2026 knowledge cutoff, A 1 million token context window, 128,000 maximum output tokens"
+    - url: https://simonwillison.net/2026/Jul/9/gpt-5-6/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "All three models have a February 16th 2026 knowledge cutoff, a million token context window, and 128,000 maximum output tokens"
+    - url: https://deepmind.google/models/gemini/
+      type: model-card
+      accessed_at: 2026-08-01
+      anchor: "Frontier intelligence with action"
+  related_gaps: []
+  prerequisites: [ai-fluency/foundation-vs-finetuned]
+  challenge_types: [concept-recall]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 10 primary, 9 secondary, 9 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/long-context-vs-rag
+  gap: AI technical fluency
+  concept: "When expanding context windows eliminates the need for RAG versus when retrieval-based systems remain superior"
+  difficulty: hard
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Below the threshold of 50,000 to 100,000 tokens, the LLM Wiki approach is vastly superior in token efficiency, potentially cutting token usage by up to 95% compared to loading all source documents into context at query time"
+    - url: https://blog.starmorph.com/blog/karpathy-llm-wiki-knowledge-base-guide
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG requires vector databases and embedding pipelines; an LLM Wiki requires only a folder of markdown files."
+    - url: https://www.kunalganglani.com/blog/llm-wiki-karpathy-local-knowledge-base
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG is stateless; the LLM Wiki is a persistent, compounding artifact that gets richer with every source you add."
+    - url: https://atlan.com/know/llm-wiki-vs-rag-knowledge-base/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Neither is universally better. LLM wikis outperform RAG on token efficiency and simplicity for small, stable, personal-scale knowledge bases below roughly 100-200 articles and 50,000-100,000 tokens."
+    - url: sources/GenerativeAICourse/lessons/09_RAG.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "There is a limitation on the context window, and if the data exceeds that, which in most cases it will, then we divide it into chunks."
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "RAG patterns, prompt engineering, MCP"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-8-pillars.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG vs Fine-Tuning"
+    - url: sources/linkedin_resources/claude_code/complete-claude-ai-learning-document.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Claude Prompting Best Practices"
+    - url: sources/linkedin_resources/free_resources/simon-willison-gpt5-family.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "All three models have: A 1 million token context window"
+  related_gaps: []
+  prerequisites: [ai-fluency/context-windows, ai-fluency/rag-fundamentals]
+  challenge_types: [scenario, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 4 primary, 4 secondary, 1 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/rag-fundamentals
+  gap: AI technical fluency
+  concept: "How RAG works: retrieve relevant chunks from external storage, augment the prompt, generate grounded responses"
+  difficulty: medium
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Retrieval-Augmented Generation is the superior strategy for maintaining factual integrity and clinical safety. RAG significantly reduces hallucination rates by dynamically accessing up-to-date, external knowledge sources at inference time"
+    - url: https://blog.starmorph.com/blog/karpathy-llm-wiki-knowledge-base-guide
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG (Retrieval-Augmented Generation) retrieves relevant document chunks at query time using vector embeddings."
+    - url: https://www.kunalganglani.com/blog/llm-wiki-karpathy-local-knowledge-base
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG retrieves raw document chunks at query time and synthesizes an answer from scratch each time."
+    - url: https://atlan.com/know/llm-wiki-vs-rag-knowledge-base/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG outperforms on large, dynamic, multi-user corpora where the knowledge base exceeds context window limits"
+    - url: https://www.epsilla.com/blogs/llm-wiki-kills-rag-karpathy-enterprise-semantic-graph
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "chop documents into arbitrary chunks, convert them into mathematical vectors, and store them in a specialized database"
+    - url: sources/GenerativeAICourse/lessons/07_prompt_engineering.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "We create embeddings from our data, store them in vector database. Semantic search is done by taking in the prompt and comparing it with the embeddings"
+    - url: sources/GenerativeAICourse/lessons/09_RAG.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "RAG is literally building a function, where when user asks a question, we turn the question into vectors, compare it with vectors in our vector database, then once we find the relevant vectors, we add it to the question with the prompt."
+    - url: sources/GenerativeAICourse/lessons/11_Agents.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Memory: This is fundamental software engineering. We've explored solutions like RAG and long context windows, and there's ongoing development like Talk agents."
+    - url: sources/GenerativeAICourse/lessons/13_MCP.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "MCP introduced a standardized communication layer between AI applications and tools"
+    - url: sources/GenerativeAICourse_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Retrieval-Augmented Generation (RAG)"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "13 lesson .md files (LLMs, RAG, agents, evals, LLMOps)"
+    - url: sources/agents-towards-production_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Production RAG with Contextual AI"
+    - url: https://europe-west1-rag-techniques-views-tracker.cloudfunctions.net/rag-techniques-tracker?notebook=agents-towards-production--readme&click=course-free-module-cta&target=https%3A%2F%2Fwww.diamant-ai.com%2Fcourses%3Futm_source%3Dgithub%26utm_medium%3Dreadme%26utm_campaign%3Dagents-towards-production&retarget=0&text=course-free-module-cta
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "creator of the course 'Prompt to Production'"
+    - url: https://diamant-ai.com/courses
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Master the system design and methodologies that hold up no matter which LLM comes next"
+    - url: sources/karpathy-llm-wiki.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Most people's experience with LLMs and documents looks like RAG: you upload a collection of files, the LLM retrieves relevant chunks at query time, and generates an answer. This works, but the LLM is rediscovering knowledge from scratch on every question."
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "RAG patterns, vector embeddings, agentic RAG"
+    - url: https://www.linkedin.com/posts/productfaculty_your-github-profile-is-now-your-resume-for-share-7434331533873799168-MmHM
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Retrieval augmented generation systems"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-aimpm-share-7434920388750598144-9O1s
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Learn RAG, fine-tuning, evals, and agentic AI"
+    - url: https://www.linkedin.com/posts/pawel-huryn_900k-total-for-ai-pms-at-openai-meta-share-7435020927710658560-OY59
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG chatbot"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-aipm-ai-share-7470776771680931840-on2g
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "𝟒. 𝐑𝐀𝐆 (𝐑𝐞𝐭𝐫𝐢𝐞𝐯𝐚𝐥-𝐀𝐮𝐠𝐦𝐞𝐧𝐭𝐞𝐝 𝐆𝐞𝐧𝐞𝐫𝐚𝐭𝐢𝐨𝐧)"
+    - url: https://www.linkedin.com/posts/productfaculty_if-i-wanted-to-become-a-top-01-agentic-share-7479542633200250880--DZF
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "100+ working agent/RAG apps to clone and learn from hands-on"
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG vs Fine-Tuning"
+    - url: sources/linkedin_resources/ai_pm_skills/15-free-resources-ai-native-pm.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Full AI Product Cycle"
+    - url: sources/linkedin_resources/ai_pm_skills/20-github-repos-for-agentic-builders.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "100+ working agent/RAG apps to clone and learn from hands-on"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG and retrieval"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-ml-llm-rag-agents-5-layer-map.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG wraps the LLM. You hand the model your data at question time."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-interview-questions-by-tier.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Walk me through RAG."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-8-pillars.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "At the core of most good features is a strong understanding of this layer on top of models."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-9-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Understanding when to use RAG vs fine-tuning vs just prompting will save you."
+    - url: https://lnkd.in/e-N3BjC2
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG Systems"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-resources-6-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG, by definition, requires a data source + LLM."
+    - url: https://bit.ly/pcprompts
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG — retrieve chunks, stuff context, generate"
+    - url: https://lnkd.in/dZ-e_C9G
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "how-to-build-a-rag-chatbot"
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG — retrieve chunks, stuff context, generate"
+    - url: sources/linkedin_resources/ai_pm_skills/glossary-of-ai-pm-19-topics.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG — Reduce hallucinations"
+    - url: https://lnkd.in/ejugguHC
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG, function calling, code execution, external APIs"
+    - url: https://lnkd.in/ebfnDUmi
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG vs fine-tuning vs prompt engineering"
+    - url: sources/linkedin_resources/ai_pm_skills/karpathy-agents-as-distribution-channel.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Your competitor ships an MCP server and suddenly every Claude Code user, every Cursor session, every autonomous workflow can discover and use their product."
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG chatbot"
+    - url: sources/linkedin_resources/career_advice/pawel-huryn-ai-salaries.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "RAG chatbot"
+    - url: sources/linkedin_resources/claude_code/complete-claude-ai-learning-document.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Claude Cookbooks"
+    - url: sources/linkedin_resources/claude_code/two-types-of-pms-claude-code-os.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "His feedback analysis runs across Zendesk, Gong, Salesforce, Slack, and app stores in a single prompt"
+    - url: sources/linkedin_resources/free_resources/10-github-repos-better-than-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Real LLM apps with RAG patterns"
+    - url: https://lnkd.in/g-Y62FHv
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "RAG_Techniques"
+    - url: sources/linkedin_resources/free_resources/ai-system-design-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG, agents, and memory."
+    - url: sources/linkedin_resources/free_resources/jay-alammar-llm-repo-6-months-saved.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG implementation guide"
+    - url: sources/linkedin_resources/free_resources/microsoft-ai-agents-course.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Vector embeddings explained"
+    - url: sources/linkedin_resources/free_resources/perfect-ai-roadmap-one-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Visual guide to LLM agents"
+    - url: sources/linkedin_resources/free_resources/stanford-free-ai-education-youtube.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Neural nets, CNNs, Generative Models, and VLMs"
+  related_gaps: []
+  prerequisites: [ai-fluency/prompting-techniques]
+  challenge_types: [concept-recall, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 12 primary, 13 secondary, 24 tertiary
+  # critic: stability-recency: stability: foundational
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/fine-tuning-when-why
+  gap: AI technical fluency
+  concept: "Decision framework for when to fine-tune versus use prompting, RAG, or hybrid approaches"
+  difficulty: hard
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Under this framework, RAG emerges as the most cost-efficient adaptation method for both open-source and proprietary models. Although RAG incurs higher operational pipeline costs at inference time"
+    - url: sources/GenerativeAICourse/lessons/11_Agents.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Poor tool documentation causes agents to misuse APIs."
+    - url: sources/GenerativeAICourse/lessons/15_finetuning.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Prompt-based methods adapt the model by giving it instructions, but fine-tuning adapts the model by adjusting its weights or parameters."
+    - url: sources/GenerativeAICourse/lessons/20_case_studies.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Start small - Prove value with focused applications first"
+    - url: sources/GenerativeAICourse/lessons/21_future.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "AI-Native Applications: Software designed around AI capabilities from the ground up, not just bolting AI onto existing products"
+    - url: sources/GenerativeAICourse_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "AI engineering is less about training models and more about adapting them (e.g. prompt engineering, fine-tuning)"
+    - url: sources/agents-towards-production_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Fine-Tuning Agents"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "fine-tuning, RAG, AI agents"
+    - url: https://www.linkedin.com/posts/productfaculty_your-github-profile-is-now-your-resume-for-share-7434331533873799168-MmHM
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prompt optimization & eval frameworks"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-aimpm-share-7434920388750598144-9O1s
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Learn RAG, fine-tuning, evals, and agentic AI"
+    - url: https://www.linkedin.com/posts/pawel-huryn_900k-total-for-ai-pms-at-openai-meta-share-7435020927710658560-OY59
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Fine-tuning for PMs"
+    - url: https://www.linkedin.com/posts/enzoa_claude-code-is-exploding-right-now-people-share-7437528894586605568-7kd0
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Skills are the real power of Claude Code. They let AI: ✅ Follow real workflows ✅ Use structured methods ✅ Behave like a specialized teammate ✅ Automate multi step work"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-aipm-ai-share-7470776771680931840-on2g
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "𝟑. 𝐅𝐢𝐧𝐞-𝐓𝐮𝐧𝐢𝐧𝐠"
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "At the core of most good features is a strong understanding of this layer on top of models."
+    - url: sources/linkedin_resources/ai_pm_skills/15-free-resources-ai-native-pm.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "The AI Product Builder's Canon (The New Laws of Building AI Products)"
+    - url: sources/linkedin_resources/ai_pm_skills/20-github-repos-for-agentic-builders.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Complete Agentic AI Engineering Course"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-interview-questions-by-tier.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "A guardrail metric trips mid-launch. Now what?"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-8-pillars.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG vs Fine-Tuning"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-9-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Understanding when to use RAG vs fine-tuning vs just prompting will save you."
+    - url: https://lnkd.in/e-N3BjC2
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "AI Agents"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-resources-6-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "𝟑. 𝐅𝐢𝐧𝐞-𝐓𝐮𝐧𝐢𝐧𝐠"
+    - url: https://bit.ly/pcprompts
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "When to fine-tune vs prompt vs RAG"
+    - url: https://lnkd.in/ejugguHC
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Don't build isolated agents. Build ecosystems where agents discover each other and coordinate"
+    - url: https://lnkd.in/ebfnDUmi
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG vs fine-tuning vs prompt engineering"
+    - url: sources/linkedin_resources/ai_pm_skills/maria-r-vibe-coding.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Understand model architecture tradeoffs"
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Fine-tuning for PMs"
+    - url: sources/linkedin_resources/career_advice/pawel-huryn-ai-salaries.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Fine-tuning for PMs"
+    - url: sources/linkedin_resources/career_advice/singhashutosh05-pm-interviews.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "System design (35%)"
+    - url: sources/linkedin_resources/claude_code/two-types-of-pms-claude-code-os.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "The second group rebuilt their entire operating system around it"
+    - url: sources/linkedin_resources/free_resources/10-github-repos-better-than-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "From notebook to production"
+    - url: sources/linkedin_resources/free_resources/anthropic-13-free-ai-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Create, deploy, and share reusable capabilities within Claude Code."
+    - url: sources/linkedin_resources/free_resources/jay-alammar-llm-repo-6-months-saved.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Fine-tune BERT yourself"
+  related_gaps: []
+  prerequisites: [ai-fluency/rag-fundamentals, ai-fluency/foundation-vs-finetuned]
+  challenge_types: [scenario, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 7 primary, 9 secondary, 16 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/llm-wiki-knowledge-compounding
+  gap: AI technical fluency
+  concept: "The LLM Wiki pattern: pre-compile knowledge once at ingest-time rather than re-derive on every query"
+  difficulty: hard
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "The LLM Wiki pattern inverts this relationship by shifting the computational cost from query-time to compile-time. Operating under a compiler analogy, the large language model incrementally builds and maintains a structured, interlinked collection of markdown files"
+    - url: https://blog.starmorph.com/blog/karpathy-llm-wiki-knowledge-base-guide
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "An LLM Wiki is stateful — knowledge compounds over time. RAG is stateless — each query starts fresh."
+    - url: https://www.kunalganglani.com/blog/llm-wiki-karpathy-local-knowledge-base
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "The LLM Wiki compiles knowledge at ingestion time into structured wiki pages with explicit cross-references."
+    - url: https://atlan.com/know/llm-wiki-vs-rag-knowledge-base/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Andrej Karpathy proposed a personal knowledge base using three markdown folders: raw/ for source material, wiki/ for LLM-compiled summary articles, and index.md as a master map"
+    - url: https://www.epsilla.com/blogs/llm-wiki-kills-rag-karpathy-enterprise-semantic-graph
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "uses an LLM not to index, but to compile this raw material into a structured, interconnected, and self-healing Wiki of Markdown files"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "karpathy-llm-wiki.md              ← Karpathy's LLM Wiki idea doc (primary for concept node #10)"
+    - url: sources/karpathy-llm-wiki.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Instead of just retrieving from raw documents at query time, the LLM incrementally builds and maintains a persistent wiki — a structured, interlinked collection of markdown files that sits between you and the raw sources."
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Karpathy: agents as new distribution channel — MCP adoption, CLI as legacy, product discovery"
+  related_gaps: []
+  prerequisites: [ai-fluency/rag-fundamentals]
+  challenge_types: [concept-recall, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 2 primary, 6 secondary, 0 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/why-evals-matter
+  gap: AI technical fluency
+  concept: "Why evaluation frameworks are critical; avoiding Goodhart's law and the problem of metrics that don't reflect true quality"
+  difficulty: medium
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "The primary root cause of unsuccessful artificial intelligence products is the failure of engineering and product teams to create robust, systemic evaluation frameworks"
+    - url: sources/GenerativeAICourse/lessons/07_prompt_engineering.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Prompts are not write once, run forever. They need ongoing validation after each update, possibly even version-locking where feasible if exact reproducibility is critical. They need to be treated with the same rigor as any ML experiment"
+    - url: sources/GenerativeAICourse/lessons/17_evaluation.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Evaluation is the only way to know if your AI system is working as intended. Without rigorous evaluation, you're flying blind"
+    - url: sources/GenerativeAICourse/lessons/20_case_studies.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Measure rigorously - Track both technical and business metrics"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "openai-gpt4-report.url        ← GPT-4 technical report (training, evals, model card)"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "evals & grounding, evals, observability"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-aimpm-share-7434920388750598144-9O1s
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Learn RAG, fine-tuning, evals, and agentic AI"
+    - url: https://www.linkedin.com/posts/pawel-huryn_900k-total-for-ai-pms-at-openai-meta-share-7435020927710658560-OY59
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "AI Evals for PMs"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-freecourses-share-7439645289273262081-nNd7
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Responsible AI: https://lnkd.in/d_Y-_BS8"
+    - url: https://www.linkedin.com/posts/aagupta_shubham-saboo-a-senior-ai-pm-at-google-share-7477018635149103104-whCe
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "A skill is something you write once and reuse, which means it slowly rots without you noticing. You add a line to your CLAUDE.md. You make your PRD-review skill a little stricter. Your launch checklist grows until the agent quietly ignores half of it. A month later your output is worse and you have no idea which change caused it."
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "This has become a PM responsibility, so get deep on what makes a good one."
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Evals"
+    - url: sources/linkedin_resources/ai_pm_skills/aakash-gupta-pm-requirements.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Write and run evals"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-8-pillars.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "This has become a PM responsibility, so get deep on what makes a good one."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-9-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "The best AI PMs obsess over evals."
+    - url: https://bit.ly/pcprompts
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Goodhart's law, MMLU/HumanEval, custom evals"
+    - url: https://bit.ly/pcfinetune
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Goodhart's law, MMLU/HumanEval, custom evals"
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Goodhart's law, MMLU/HumanEval, custom evals"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-technical-requirements-dissolving-line.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Write and run evals"
+    - url: sources/linkedin_resources/ai_pm_skills/glossary-of-ai-pm-19-topics.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Evaluation — Know what works"
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "AI Evals for PMs"
+    - url: sources/linkedin_resources/career_advice/90-day-plan-break-into-ai-pm.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Every PM can write a prompt. Almost none can write an eval suite."
+    - url: sources/linkedin_resources/career_advice/pawel-huryn-ai-salaries.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "AI Evals for PMs"
+    - url: sources/linkedin_resources/career_advice/singhashutosh05-pm-interviews.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Model evaluation (25%)"
+    - url: sources/linkedin_resources/free_resources/simon-willison-gpt5-family.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Amusingly, one self-reported benchmark that Fable 5 crushed the GPT-5.6 family on was SWE-Bench Pro, where Fable 5 got 80% compared to GPT-5.6 Sol getting 64.6%. OpenAI published an article calling out SWE-Bench Pro for problems they found while auditing that benchmark"
+    - url: https://simonwillison.net/2026/Jul/9/gpt-5-6/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "we estimate that ~30% of SWE-bench Pro tasks are broken, and advise that model developers carefully examine results"
+    - url: sources/linkedin_resources/free_resources/stanford-free-ai-education-youtube.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Supervised/unsupervised learning + deep dive into algorithms"
+    - url: https://arxiv.org/abs/2203.02155
+      type: paper
+      accessed_at: 2026-08-01
+      anchor: "In human evaluations on our prompt distribution, outputs from the 1.3B parameter InstructGPT model are preferred to outputs from the 175B GPT-3"
+    - url: https://deepmind.google/models/gemini/
+      type: model-card
+      accessed_at: 2026-08-01
+      anchor: "Evals"
+    - url: https://openai.com/research/gpt-4
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "exhibits human-level performance on various professional and academic benchmarks"
+  related_gaps: []
+  prerequisites: [ai-fluency/foundation-vs-finetuned]
+  challenge_types: [concept-recall, scenario]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 8 primary, 8 secondary, 14 tertiary
+  # critic: stability-recency: stability: foundational
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/eval-design
+  gap: AI technical fluency
+  concept: "Designing custom evaluations: golden sets, rubric-based grading, regression test suites, and the three-level evaluation architecture"
+  difficulty: hard
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "A comprehensive evaluation architecture consists of three escalating tiers, dictated by cost, speed, and execution cadence. Level 1 evaluations consist of unit tests and programmatic assertions."
+    - url: sources/GenerativeAICourse/lessons/11_Agents.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Always build your prototype with the most capable model to establish a performance baseline, set up evaluation metrics (accuracy and task completion rates), and replace with smaller models where acceptable results are maintained."
+    - url: sources/GenerativeAICourse/lessons/17_evaluation.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Define success criteria - What does \"good\" look like for your application?"
+    - url: sources/GenerativeAICourse/lessons/18_LLMOps.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Automate Evaluation - Run automated tests on every change, Track key metrics over time, Alert on regressions"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "13 lesson .md files (LLMs, RAG, agents, evals, LLMOps)"
+    - url: sources/agents-towards-production_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Agent Evaluation"
+    - url: https://europe-west1-rag-techniques-views-tracker.cloudfunctions.net/rag-techniques-tracker?notebook=agents-towards-production--readme&click=course-free-module-cta&target=https%3A%2F%2Fwww.diamant-ai.com%2Fcourses%3Futm_source%3Dgithub%26utm_medium%3Dreadme%26utm_campaign%3Dagents-towards-production&retarget=0&text=course-free-module-cta
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "testing and security gates, and a real deployment with CI"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "evals & grounding, 10 case studies, interview prep, evals"
+    - url: https://www.linkedin.com/posts/productfaculty_your-github-profile-is-now-your-resume-for-share-7434331533873799168-MmHM
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prompt optimization & eval frameworks"
+    - url: https://www.linkedin.com/posts/aagupta_shubham-saboo-a-senior-ai-pm-at-google-share-7477018635149103104-whCe
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Every loop has five parts: 1/ Trigger: a new PRD lands, or 10 fresh customer calls come in 2/ Action: the agent runs the task against your skill or rubric 3/ Proof: you score the result against the last version 4/ Memory: the winner gets committed to GitHub, the loser gets reverted 5/ Stop: the loop can say 'evidence is thin' or 'this needs a human'"
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "AI Evals Guide"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Write down what a right answer looks like, then grade for it."
+    - url: sources/linkedin_resources/ai_pm_skills/aakash-gupta-pm-requirements.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Write and run evals"
+    - url: https://simonwillison.net
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "An eval is a collection of challenges designed to answer a question about a model, for example, how good is that model at generating SVGs?"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-8-pillars.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "AI Evals Guide"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-9-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "The best AI PMs obsess over evals."
+    - url: https://lnkd.in/e-N3BjC2
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "AI Evals"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-technical-requirements-dissolving-line.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Write and run evals"
+    - url: sources/linkedin_resources/ai_pm_skills/maria-r-vibe-coding.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Write and run evals"
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "How to Evaluate AI Agents"
+    - url: sources/linkedin_resources/career_advice/90-day-plan-break-into-ai-pm.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Write 10 evals on your own project in Braintrust. Watch what fails."
+    - url: sources/linkedin_resources/career_advice/pawel-huryn-ai-salaries.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "How to Evaluate AI Agents"
+    - url: https://www.linkedin.com/posts/pawel-huryn_900k-total-for-ai-pms-at-openai-meta-share-7435020927710658560-OY59
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "How to Evaluate AI Agents"
+    - url: sources/linkedin_resources/career_advice/singhashutosh05-pm-interviews.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Model evaluation (25%)"
+    - url: sources/linkedin_resources/free_resources/ai-system-design-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "AI evals from scratch."
+    - url: sources/linkedin_resources/free_resources/production-ai-agents-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "✅ Memory, tools, evals, and guardrails"
+    - url: sources/linkedin_resources/free_resources/simon-willison-gpt5-family.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "On Agents' Last Exam, an evaluation of long-running professional workflows across 55 fields, GPT-5.6 Sol sets a new high of 53.6"
+  related_gaps: []
+  prerequisites: [ai-fluency/why-evals-matter]
+  challenge_types: [concept-recall, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 9 primary, 8 secondary, 10 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: borderline, kept in track per #11
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/llm-as-judge
+  gap: AI technical fluency
+  concept: "Using LLMs to grade LLM outputs at scale; position bias, length bias, and critique shadowing to align judge behavior"
+  difficulty: hard
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Model judges are highly susceptible to cognitive biases, including position bias (a tendency to favor the first option presented in a list), length bias (equating verbosity with quality)"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "evals & grounding, evals"
+    - url: https://www.linkedin.com/posts/aagupta_shubham-saboo-a-senior-ai-pm-at-google-share-7477018635149103104-whCe
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "That commit history becomes your memory. When the skill improves, you keep the commit. When it breaks, the diff shows you the exact wording that did it. You stop guessing and start knowing."
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "LLM Judge Guide"
+    - url: https://simonwillison.net
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "They can also be more complicated custom operations (implemented as scripts called checkers), including using other models to answer questions about the run."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-8-pillars.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "LLM Judge Guide"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-9-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Guide to LLM Judges"
+    - url: https://lnkd.in/e-N3BjC2
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "LLM-as-Judge"
+  related_gaps: []
+  prerequisites: [ai-fluency/eval-design]
+  challenge_types: [concept-recall, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 2 primary, 3 secondary, 3 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/inference-cost-economics
+  gap: AI technical fluency
+  concept: "Understanding token economics, cost per query, pricing models, and the Cost-of-Pass metric for evaluating total economic impact"
+  difficulty: medium
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Recent economic analyses utilize the Cost-of-Pass metric, which measures the total compute and capital expended per correct answer"
+    - url: sources/GenerativeAICourse/lessons/01_intro_to_ai.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "this is why it is expensive to train AI models because the computer keeps trying different formulas for millions of datasets"
+    - url: sources/GenerativeAICourse/lessons/07_prompt_engineering.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "This is not just about quality but also costs. I can get the job done with 80% quality but if I can get it done in 1 penny instead of 2 at the same quality, that is great"
+    - url: sources/GenerativeAICourse/lessons/11_Agents.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Agents of course cost more per operation than traditional automation, but they eliminate the human labor required for complex decisions. If you're paying people $50/hour to review cases that an agent can handle for $2 per case, and you process 1000 cases monthly, you save $48,000 per month minus $2000 in agent costs."
+    - url: sources/GenerativeAICourse/lessons/15_finetuning.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "A small model, fine-tuned on a specific task, might outperform a much larger out-of-the-box model on that task."
+    - url: sources/GenerativeAICourse/lessons/17_evaluation.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Is the system economically viable? Track: Cost per query, Infrastructure costs, Maintenance overhead"
+    - url: sources/GenerativeAICourse/lessons/18_LLMOps.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Model Size - LLMs are huge - serving them requires specialized infrastructure"
+    - url: sources/GenerativeAICourse/lessons/21_future.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Business Acumen: Understand how to identify valuable use cases, measure ROI, scale successful pilots"
+    - url: sources/GenerativeAICourse_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "AI engineering deals with larger models that require more compute - which means higher latency and different infrastructure needs"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "PRIMARY sources (model creators + cited arXiv)"
+    - url: sources/agents-towards-production_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Docker deployment, FastAPI endpoints, security guardrails, GPU scaling"
+    - url: https://europe-west1-rag-techniques-views-tracker.cloudfunctions.net/rag-techniques-tracker?notebook=agents-towards-production--readme&click=course-free-module-cta&target=https%3A%2F%2Fwww.diamant-ai.com%2Fcourses%3Futm_source%3Dgithub%26utm_medium%3Dreadme%26utm_campaign%3Dagents-towards-production&retarget=0&text=course-free-module-cta
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "the entire lifecycle: specs the AI reads, context engineering, a repeatable build method, testing and security gates, and a real deployment with CI"
+    - url: https://diamant-ai.com/courses
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "stop rewriting your code with every new API drop"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "cost, cost/latency"
+    - url: https://www.linkedin.com/posts/productfaculty_your-github-profile-is-now-your-resume-for-share-7434331533873799168-MmHM
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "AI cost modeling"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-aimpm-share-7434920388750598144-9O1s
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Build scalable, production-ready AI products"
+    - url: https://www.linkedin.com/posts/pawel-huryn_900k-total-for-ai-pms-at-openai-meta-share-7435020927710658560-OY59
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Define and track key performance indicators (KPIs) for product success"
+    - url: https://www.linkedin.com/posts/productfaculty_if-i-wanted-to-become-a-top-01-agentic-share-7479542633200250880--DZF
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Code-first tutorials taking agents from prototype to enterprise deployment"
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "How to Price AI Products"
+    - url: sources/linkedin_resources/ai_pm_skills/15-free-resources-ai-native-pm.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "AI Cost Optimisation"
+    - url: sources/linkedin_resources/ai_pm_skills/20-github-repos-for-agentic-builders.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Principles for building agents reliable enough for real customers"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Cost per query times monthly volume equals your margin."
+    - url: sources/linkedin_resources/ai_pm_skills/aakash-gupta-pm-requirements.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prototype with code"
+    - url: https://simonwillison.net
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "It's $0.14/million input and $0.27/million output pricing means this may currently be the best value-per-intelligence model out there."
+    - url: https://www.latent.space
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "How leading labs build Agents, Models, Infra, & AI for Science"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-interview-questions-by-tier.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Estimate ChatGPT users worldwide."
+    - url: https://lnkd.in/e-N3BjC2
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Analytics & monitoring"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-resources-6-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "My default no-code tech stack"
+    - url: https://bit.ly/pcprompts
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Cost-per-query, token economics, $/1M-token model"
+    - url: https://bit.ly/pcfinetune
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Cost-per-query, token economics, $/1M-token model"
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Cost-per-query, token economics, $/1M-token model"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-technical-requirements-dissolving-line.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Understand model architecture tradeoffs"
+    - url: sources/linkedin_resources/ai_pm_skills/glossary-of-ai-pm-19-topics.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Cost — Control spend"
+    - url: https://lnkd.in/ejugguHC
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "your agents just burn credits talking past each other, not coordinating"
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "$900K+ total for AI PMs at OpenAI & Meta"
+    - url: sources/linkedin_resources/career_advice/singhashutosh05-pm-interviews.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "System design (35%)"
+    - url: sources/linkedin_resources/claude_code/chorouk-malmoum-claude-optimization.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Cost monitoring"
+    - url: sources/linkedin_resources/claude_code/maria-r-claude-code.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Reached $1B ARR in 6 months"
+    - url: sources/linkedin_resources/claude_code/two-types-of-pms-claude-code-os.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "The gap between these two groups compounds every single week because the second group is automating away the manual work"
+    - url: sources/linkedin_resources/free_resources/ai-system-design-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Model pricing (verified 2026)."
+    - url: sources/linkedin_resources/free_resources/anthropic-13-free-ai-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Learn to deploy Claude securely within the Amazon ecosystem."
+    - url: sources/linkedin_resources/free_resources/production-ai-agents-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "If you're building with LLMs, this will save you weeks."
+    - url: sources/linkedin_resources/free_resources/simon-willison-gpt5-family.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "The new models are priced per 1M input/output tokens as: Luna: $1/$6, Terra: $2.50/$15, Sol: $5/$30"
+    - url: https://simonwillison.net/2026/Jul/9/gpt-5-6/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "The new models are priced per 1M input/output tokens as Luna $1/$6, Terra $2.50/$15, Sol $5/$30"
+    - url: https://deepmind.google/models/gemini/
+      type: model-card
+      accessed_at: 2026-08-01
+      anchor: "Our latest series of Gemini models combine frontier intelligence with action."
+    - url: https://openai.com/research/gpt-4
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "while less capable than humans in many real-world scenarios"
+  related_gaps: []
+  prerequisites: [ai-fluency/foundation-vs-finetuned]
+  challenge_types: [concept-recall, scenario]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 14 primary, 15 secondary, 17 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/model-routing
+  gap: AI technical fluency
+  concept: "Dynamic routing between models based on cost, latency, and capability; fallback chains and budget enforcement"
+  difficulty: medium
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Notably, empirical tests in closed, highly technical environments reveal that while premium proprietary models perform best immediately upon deployment, smaller open-source models can achieve parity in output quality when enhanced with a robust RAG architecture"
+    - url: sources/GenerativeAICourse/lessons/11_Agents.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Usually, larger models are used for complex decision points. As an example, use an SLM for simple data retrieval (get customer order history) but an LLM for refund decisions (should we approve this $500 refund for a customer who's returned 5 items this month)."
+    - url: sources/GenerativeAICourse/lessons/15_finetuning.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Map the frontier: Once you have good results, do a training run with all models to map out the price/performance frontier and select the model that makes the most sense for your use case"
+    - url: sources/GenerativeAICourse/lessons/18_LLMOps.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Plan for Failure - Fallback mechanisms, Rate limiting, Circuit breakers"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "orchestration & routing, cost caps"
+    - url: https://www.linkedin.com/posts/productfaculty_your-github-profile-is-now-your-resume-for-share-7434331533873799168-MmHM
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Model comparison testing"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-aipm-ai-share-7470776771680931840-on2g
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "𝟓. 𝐀𝐈 𝐀𝐠𝐞𝐧𝐭𝐬 & 𝐀𝐠𝐞𝐧𝐭𝐢𝐜 𝐖𝐨𝐫𝐤𝐟𝐥𝐨𝐰𝐬"
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "This is how you go from single agents to full fleets of AI impacting productivity."
+    - url: sources/linkedin_resources/ai_pm_skills/15-free-resources-ai-native-pm.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "AI Cost Optimisation"
+    - url: sources/linkedin_resources/ai_pm_skills/20-github-repos-for-agentic-builders.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Code-first tutorials taking agents from prototype to enterprise deployment"
+    - url: https://simonwillison.net
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "My agent.datasette.io demo site was running on Gemini 3.1 Flash-Lite. I've switched it over to Luna."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-technical-requirements-dissolving-line.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Understand model architecture tradeoffs"
+    - url: https://lnkd.in/ejugguHC
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Pick proven protocols"
+    - url: sources/linkedin_resources/ai_pm_skills/maria-r-vibe-coding.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Automate workflows"
+    - url: sources/linkedin_resources/career_advice/singhashutosh05-pm-interviews.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "System design (35%)"
+    - url: sources/linkedin_resources/claude_code/chorouk-malmoum-claude-optimization.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Cost monitoring"
+    - url: sources/linkedin_resources/claude_code/maria-r-claude-code.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Production deployment tools"
+    - url: sources/linkedin_resources/free_resources/production-ai-agents-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Production-grade agent architectures"
+    - url: sources/linkedin_resources/free_resources/simon-willison-gpt5-family.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "GPT-5.6 Terra and GPT-5.6 Luna outperform Fable 5 at around one-sixteenth the cost"
+    - url: https://simonwillison.net/2026/Jul/9/gpt-5-6/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Even at medium reasoning, it beats Fable 5 by 11.4 points at roughly one-quarter the estimated cost. That efficiency extends to smaller models, which are essential to making intelligence more abundant and affordable"
+  related_gaps: []
+  prerequisites: [ai-fluency/inference-cost-economics, ai-fluency/fine-tuning-when-why]
+  challenge_types: [scenario, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 6 primary, 9 secondary, 5 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/hallucination-causes-mitigations
+  gap: AI technical fluency
+  concept: "Why LLMs hallucinate; mechanisms (parametric knowledge decay, in-context confusion); mitigation strategies (RAG, retrieval quality, context window management)"
+  difficulty: hard
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Retrieval-Augmented Generation significantly reduces hallucination rates by dynamically accessing up-to-date, external knowledge sources at inference time, grounding the model's generation in verifiable facts"
+    - url: https://blog.starmorph.com/blog/karpathy-llm-wiki-knowledge-base-guide
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "every claim in the wiki traces back to a file in raw/"
+    - url: https://www.kunalganglani.com/blog/llm-wiki-karpathy-local-knowledge-base
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "the pattern breaks down when your wiki gets too big for the AI's memory"
+    - url: https://atlan.com/know/llm-wiki-vs-rag-knowledge-base/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "an LLM compiles raw notes into structured wiki articles and maintains the index. At query time, the LLM reads the index and pulls relevant articles without a vector database or retrieval pipeline"
+    - url: https://www.epsilla.com/blogs/llm-wiki-kills-rag-karpathy-enterprise-semantic-graph
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Every statement made by the AI can be traced back to a specific, human-readable file that can be edited, verified, or deleted. This is the auditability that enterprises have been desperately seeking."
+    - url: sources/GenerativeAICourse/lessons/03_LLMs_deepdive.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "hallucinations is when a model gives a response that isn't grounded in facts (it makes things up)"
+    - url: sources/GenerativeAICourse/lessons/07_prompt_engineering.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "answer based on the data that I gave so of course the model will listen rather than try to look at its own data"
+    - url: sources/GenerativeAICourse/lessons/09_RAG.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "AI models are trained on public data up to a specific cutoff date. They cannot access information beyond what they were trained on"
+    - url: sources/GenerativeAICourse/lessons/19_ethics.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Misinformation"
+    - url: sources/GenerativeAICourse/lessons/20_case_studies.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Need robust input/output safeguards"
+    - url: https://europe-west1-rag-techniques-views-tracker.cloudfunctions.net/rag-techniques-tracker?notebook=agents-towards-production--readme&click=course-free-module-cta&target=https%3A%2F%2Fwww.diamant-ai.com%2Fcourses%3Futm_source%3Dgithub%26utm_medium%3Dreadme%26utm_campaign%3Dagents-towards-production&retarget=0&text=course-free-module-cta
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "why AI-written code falls apart as your project grows, and the spec-layer discipline that fixes it"
+    - url: https://diamant-ai.com/courses
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "No more toy dashboard clones. Architect, secure, and deploy a live, containerized application built to survive real users and edge-case failures"
+    - url: sources/karpathy-llm-wiki.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "the LLM is rediscovering knowledge from scratch on every question. There's no accumulation. Ask a subtle question that requires synthesizing five documents, and the LLM has to find and piece together the relevant fragments every time."
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "RAG, context, guardrails"
+    - url: https://www.linkedin.com/posts/enzoa_claude-code-is-exploding-right-now-people-share-7437528894586605568-7kd0
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "but the real unlock is \"skills\". You can turn Claude into a PM, researcher, analyst, or automation engine just by loading the right skill set."
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "At the core of most good features is a strong understanding of this layer on top of models."
+    - url: sources/linkedin_resources/ai_pm_skills/20-github-repos-for-agentic-builders.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Official Anthropic reference implementations (computer-use, browser-use, coding agents)"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Tokens, context windows, and why it hallucinates."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-ml-llm-rag-agents-5-layer-map.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "\"define a hallucination and cut it.\" Answer \"we'll fine-tune it\" and you've lost the room."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-interview-questions-by-tier.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Define hallucinations in LLMs."
+    - url: https://lnkd.in/e-N3BjC2
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG Systems"
+    - url: https://lnkd.in/dZ-e_C9G
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "how-to-build-a-rag-chatbot"
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Why LLMs hallucinate + mitigation stack"
+    - url: sources/linkedin_resources/ai_pm_skills/glossary-of-ai-pm-19-topics.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "RAG — Reduce hallucinations"
+    - url: https://lnkd.in/ejugguHC
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Black box thinking just burns tokens on hallucinations"
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Create conversational experiences that are personalized, relevant, and grounded in trusted information"
+    - url: sources/linkedin_resources/claude_code/complete-claude-ai-learning-document.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Claude's Constitution"
+    - url: sources/linkedin_resources/free_resources/10-github-repos-better-than-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Reduce hallucinations in production"
+  related_gaps: []
+  prerequisites: [ai-fluency/rag-fundamentals, ai-fluency/context-windows]
+  challenge_types: [concept-recall, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 6 primary, 9 secondary, 13 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/ai-safety-basics
+  gap: AI technical fluency
+  concept: "Alignment fundamentals: RLHF, constitutional AI, safety filters, and the mechanics of steering model behavior"
+  difficulty: hard
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Constitutional AI replaces human preference labels with self-supervision, guiding the model entirely through a transparent, codified set of ethical principles—a constitution"
+    - url: sources/GenerativeAICourse/lessons/03_LLMs_deepdive.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "the output of the model can be racist, sexist, or just wrong since it is trained on data indiscriminately scraped from the internet"
+    - url: sources/GenerativeAICourse/lessons/07_prompt_engineering.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Azure Content Safety filters to block the kinds of content you don't want the model to output"
+    - url: sources/GenerativeAICourse/lessons/19_ethics.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Ethical AI isn't just about avoiding harm - it's about building systems that actively benefit society."
+    - url: sources/GenerativeAICourse/lessons/20_case_studies.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Audit data for representation"
+    - url: sources/GenerativeAICourse/lessons/21_future.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Ethical Foundations: Develop strong principles around fairness, transparency, accountability"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "anthropic-claude.url          ← Claude model family (context, safety, tool use)"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "safety, governance"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-freecourses-share-7439645289273262081-nNd7
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Responsible AI: https://lnkd.in/d_Y-_BS8"
+    - url: https://www.linkedin.com/posts/productfaculty_if-i-wanted-to-become-a-top-01-agentic-share-7479542633200250880--DZF
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Principles for building agents reliable enough for real customers"
+    - url: sources/linkedin_resources/ai_pm_skills/12-month-ai-pm-technical-plan.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Responsible AI"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Guardrails and safety"
+    - url: https://simonwillison.net
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Relying solely on closed models is not inherently safe: they can be breached, misused, or fail in ways that outsiders cannot detect."
+    - url: sources/linkedin_resources/ai_pm_skills/glossary-of-ai-pm-19-topics.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Safety — Prevent harmful outputs"
+    - url: sources/linkedin_resources/free_resources/anthropic-13-free-ai-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Essential concepts for collaborating effectively and responsibly with AI."
+    - url: https://arxiv.org/abs/2203.02155
+      type: paper
+      accessed_at: 2026-08-01
+      anchor: "these models are not aligned with their users"
+  related_gaps: []
+  prerequisites: [ai-fluency/training-pipeline, ai-fluency/hallucination-causes-mitigations]
+  challenge_types: [concept-recall, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 5 primary, 2 secondary, 9 tertiary
+  # critic: stability-recency: stability: foundational
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/prompt-injection-security
+  gap: AI technical fluency
+  concept: "Adversarial prompt injection threats: direct attacks, indirect injection via RAG retrieval, tool poisoning, and jailbreak mechanics"
+  difficulty: hard
+  source:
+    - url: sources/AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Tool poisoning (MCP03) represents the highest-severity vulnerability targeting agentic systems in production. When an agent connects to an MCP server, the server transmits metadata detailing its available tools"
+    - url: sources/GenerativeAICourse/lessons/03_LLMs_deepdive.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Bad actors exploit that for prompt injection attacks by publishing stuff on the internet hoping it will influence future models to generate the responses they desire"
+    - url: sources/GenerativeAICourse/lessons/07_prompt_engineering.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Extract your system prompt to exploit your application, Jailbreak or inject prompts to get the model to do bad things"
+    - url: sources/GenerativeAICourse/lessons/09_RAG.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "we add it to the question with the prompt"
+    - url: sources/GenerativeAICourse/lessons/13_MCP.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "When a tool's API changes, only the MCP server needs updating — your AI agent code remains untouched"
+    - url: sources/GenerativeAICourse/lessons/19_ethics.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Resist misuse"
+    - url: sources/GenerativeAICourse_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Defensive prompting and preventing common AI exploits"
+    - url: sources/agents-towards-production_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Security with LlamaFirewall"
+    - url: https://europe-west1-rag-techniques-views-tracker.cloudfunctions.net/rag-techniques-tracker?notebook=agents-towards-production--readme&click=course-free-module-cta&target=https%3A%2F%2Fwww.diamant-ai.com%2Fcourses%3Futm_source%3Dgithub%26utm_medium%3Dreadme%26utm_campaign%3Dagents-towards-production&retarget=0&text=course-free-module-cta
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "harden the build, and finish with a live, deployed product"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "guardrails"
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "MCP Explained for PMs"
+    - url: sources/linkedin_resources/ai_pm_skills/20-github-repos-for-agentic-builders.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Principles for building agents reliable enough for real customers"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Schema validation on every output before you trust it."
+    - url: https://simonwillison.net
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Operating under the false belief that all accessible entities were intended to be in-scope for the exercise, Claude compromised the impacted organizations' infrastructure using basic techniques, such as exploiting weak passwords and unauthenticated endpoints."
+    - url: https://lnkd.in/e-N3BjC2
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prompt Engineering"
+    - url: sources/linkedin_resources/claude_code/complete-claude-ai-learning-document.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Claude Code Best Practices"
+    - url: sources/linkedin_resources/free_resources/production-ai-agents-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "✅ Memory, tools, evals, and guardrails"
+  related_gaps: []
+  prerequisites: [ai-fluency/prompting-techniques, ai-fluency/rag-fundamentals]
+  challenge_types: [concept-recall, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 9 primary, 3 secondary, 5 tertiary
+  # critic: stability-recency: stability: foundational
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/training-pipeline
+  gap: AI technical fluency
+  concept: "Understanding the complete AI training pipeline from pretraining through supervised fine-tuning to reinforcement learning"
+  difficulty: medium
+  source:
+    - url: sources/GenerativeAICourse/lessons/01_intro_to_ai.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "With AI models like ChatGPT, the model is trained using a supervised model where it is trained on millions of labeled data like books or websites. The model then uses reinforcement learning where it generates multiple possible responses to a given prompt, and these responses are rated based on how helpful or accurate they are either by humans or by another AI system."
+    - url: sources/GenerativeAICourse/lessons/03_LLMs_deepdive.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Post-training exists because a pre-trained model has two issues: They are optimized for text completion & not conversations"
+    - url: sources/GenerativeAICourse/lessons/15_finetuning.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "While many things around fine-tuning - deciding whether to fine-tune, acquiring data, and maintaining fine-tuned models - are hard, the actual process of fine-tuning is more straightforward."
+    - url: sources/GenerativeAICourse/lessons/18_LLMOps.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Pipeline Automation - Training pipelines, Evaluation workflows, Deployment automation"
+    - url: sources/GenerativeAICourse/lessons/21_future.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Self-Improving Systems: AI that can identify its own weaknesses, propose improvements, implement upgrades"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "arxiv-rlhf-instructgpt.url    ← RLHF paper (alignment, training pipeline)"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "evals, prototyping, model architecture, automation"
+    - url: https://www.linkedin.com/posts/pawel-huryn_900k-total-for-ai-pms-at-openai-meta-share-7435020927710658560-OY59
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Neural Networks, Transformers, and LLMs"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-freecourses-share-7439645289273262081-nNd7
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Large Language Models: https://lnkd.in/dASQSy2w"
+    - url: sources/linkedin_resources/ai_pm_skills/12-month-ai-pm-technical-plan.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Large Language Models"
+    - url: https://bit.ly/pcprompts
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Pretraining → SFT → RLHF/DPO"
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Pretraining → SFT → RLHF/DPO"
+    - url: sources/linkedin_resources/ai_pm_skills/glossary-of-ai-pm-19-topics.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Training — Customize for needs"
+    - url: sources/linkedin_resources/career_advice/pawel-huryn-ai-salaries.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Gen AI, LLMs, and AI Frameworks"
+    - url: sources/linkedin_resources/free_resources/ai-system-design-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "LLM internals explained."
+    - url: sources/linkedin_resources/free_resources/perfect-ai-roadmap-one-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Build GPT with Karpathy"
+    - url: sources/linkedin_resources/free_resources/stanford-free-ai-education-youtube.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Neural nets, CNNs, RNNs, and best practices for deep models"
+    - url: https://arxiv.org/abs/2203.02155
+      type: paper
+      accessed_at: 2026-08-01
+      anchor: "we collect a dataset of labeler demonstrations of the desired model behavior, which we use to fine-tune GPT-3 using supervised learning. We then collect a dataset of rankings of model outputs, which we use to further fine-tune this supervised model using reinforcement learning from human feedback"
+  related_gaps: []
+  prerequisites: [ai-fluency/transformer-architecture-basics]
+  challenge_types: [concept-recall, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 6 primary, 4 secondary, 8 tertiary
+  # critic: stability-recency: stability: foundational
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/prompting-techniques
+  gap: AI technical fluency
+  concept: "Core prompting strategies to guide AI model behavior and outputs"
+  difficulty: easy
+  source:
+    - url: sources/GenerativeAICourse/lessons/01_intro_to_ai.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "With AI models like ChatGPT, the model is trained using a supervised model where it is trained on millions of labeled data like books or websites. The model then uses reinforcement learning where it generates multiple possible responses to a given prompt, and these responses are rated based on how helpful or accurate they are either by humans or by another AI system."
+    - url: sources/GenerativeAICourse/lessons/07_prompt_engineering.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Be Specific, Self Check, Few Shot Prompting, Chain of Thought (CoT), Self-Consistency, Generated Knowledge Prompting (GKP), Tree of Thought (ToT)"
+    - url: sources/GenerativeAICourse/lessons/11_Agents.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "With an AI agent, it can review customer's purchase history, considers the reason for return, evaluates the company policy in context, then makes the decision."
+    - url: sources/GenerativeAICourse_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Prompt engineering"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "13 lesson .md files (LLMs, RAG, agents, evals, LLMOps)"
+    - url: sources/agents-towards-production_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Tutorials cover stateful workflows, vector memory, real‑time web search APIs, Docker deployment, FastAPI endpoints, security guardrails, GPU scaling, browser automation, fine‑tuning, multi‑agent coordination, observability, evaluation, and UI development."
+    - url: https://europe-west1-rag-techniques-views-tracker.cloudfunctions.net/rag-techniques-tracker?notebook=agents-towards-production--readme&click=course-free-module-cta&target=https%3A%2F%2Fwww.diamant-ai.com%2Fcourses%3Futm_source%3Dgithub%26utm_medium%3Dreadme%26utm_campaign%3Dagents-towards-production&retarget=0&text=course-free-module-cta
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Build elite system prompts, context files (CLAUDE.md), and test gates that force AI agents to output production-grade code"
+    - url: https://diamant-ai.com/courses
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Build elite system prompts, context files (CLAUDE.md), and test gates that force AI agents to output production-grade code"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "5 free prompt engineering courses"
+    - url: https://www.linkedin.com/posts/productfaculty_your-github-profile-is-now-your-resume-for-share-7434331533873799168-MmHM
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prompt optimization & eval frameworks"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-aimpm-share-7434920388750598144-9O1s
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "AI PMs don't just have a theoretical understanding of concepts, but a practical knowledge of AI engineering"
+    - url: https://www.linkedin.com/posts/pawel-huryn_900k-total-for-ai-pms-at-openai-meta-share-7435020927710658560-OY59
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "14 Prompting Techniques for PMs"
+    - url: https://www.linkedin.com/posts/enzoa_claude-code-is-exploding-right-now-people-share-7437528894586605568-7kd0
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "You can turn Claude into a PM, researcher, analyst, or automation engine just by loading the right skill set."
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-freecourses-share-7439645289273262081-nNd7
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Chat-GPT: https://aatir.substack.com/p/45-chatgpt-use-cases-for-product"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-aipm-ai-share-7470776771680931840-on2g
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "𝟐. 𝐏𝐫𝐨𝐦𝐩𝐭 𝐄𝐧𝐠𝐢𝐧𝐞𝐞𝐫𝐢𝐧𝐠"
+    - url: https://www.linkedin.com/posts/productfaculty_if-i-wanted-to-become-a-top-01-agentic-share-7479542633200250880--DZF
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "12 lessons to build your first agents"
+    - url: https://www.linkedin.com/posts/aagupta_shubham-saboo-a-senior-ai-pm-at-google-share-7477018635149103104-whCe
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "In 2023 and 2024, PMs wrote prompts. Then Anthropic released skills, and through 2025 and 2026 PMs wrote those instead"
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prompt Engineering"
+    - url: sources/linkedin_resources/ai_pm_skills/12-month-ai-pm-technical-plan.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Chat-GPT"
+    - url: sources/linkedin_resources/ai_pm_skills/15-free-resources-ai-native-pm.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Prompt Engineering Masterclass"
+    - url: sources/linkedin_resources/ai_pm_skills/20-github-repos-for-agentic-builders.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Foundational LLM knowledge you need"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Prompting as a system"
+    - url: https://www.latent.space
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "The AI Engineer newsletter + Top technical AI podcast"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-8-pillars.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Understand the intricacies of how the tech works."
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-learning-path-9-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "It's the top skill for great agents + productivity."
+    - url: https://lnkd.in/e-N3BjC2
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prompt Engineering"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-resources-6-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "𝟐. 𝐏𝐫𝐨𝐦𝐩𝐭 𝐄𝐧𝐠𝐢𝐧𝐞𝐞𝐫𝐢𝐧𝐠"
+    - url: https://bit.ly/3EZtCLs
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "The AI foundations every PM needs: key terms, how neural networks learn, and how transformers and LLMs actually work"
+    - url: https://bit.ly/pcprompts
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "CoT, few-shot, system prompts, structured outputs"
+    - url: https://bit.ly/pcfinetune
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "CoT, few-shot, system prompts, structured outputs"
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "CoT, few-shot, system prompts, structured outputs"
+    - url: sources/linkedin_resources/ai_pm_skills/glossary-of-ai-pm-19-topics.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Prompting — Get reliable outputs"
+    - url: https://lnkd.in/ejugguHC
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Build explicit reasoning chains that show their work"
+    - url: https://lnkd.in/ebfnDUmi
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "RAG vs fine-tuning vs prompt engineering"
+    - url: sources/linkedin_resources/ai_pm_skills/karpathy-agents-as-distribution-channel.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Agents don't browse your marketing site, watch your demo video, or click through your onboarding flow. They call your CLI. They hit your MCP server. They read your docs programmatically."
+    - url: sources/linkedin_resources/ai_pm_skills/maria-r-vibe-coding.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prototype with code"
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "14 Prompting Techniques for PMs"
+    - url: sources/linkedin_resources/career_advice/90-day-plan-break-into-ai-pm.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "you don't need a PhD. You need shipped artifacts, an opinion, and proof you can think in evals."
+    - url: sources/linkedin_resources/career_advice/pawel-huryn-ai-salaries.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "14 Prompting Techniques for PMs"
+    - url: sources/linkedin_resources/claude_code/complete-claude-ai-learning-document.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "prompting best practices"
+    - url: sources/linkedin_resources/claude_code/two-types-of-pms-claude-code-os.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Frank Lee has skills that trigger specific analytical workflows with one slash command"
+    - url: sources/linkedin_resources/free_resources/10-github-repos-better-than-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Prompt patterns that scale"
+    - url: sources/linkedin_resources/free_resources/anthropic-13-free-ai-courses.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "The definitive guide to prompting and automating everyday tasks."
+    - url: sources/linkedin_resources/free_resources/jay-alammar-llm-repo-6-months-saved.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Prompt engineering mastery"
+    - url: sources/linkedin_resources/free_resources/microsoft-ai-agents-course.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Structured AI outputs"
+    - url: sources/linkedin_resources/free_resources/perfect-ai-roadmap-one-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "HuggingFace agents full course"
+    - url: sources/linkedin_resources/free_resources/simon-willison-gpt5-family.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Prompt cache breakpoints — brings the Claude model of prompt caching to OpenAI, letting you be explicit about where the cache breakpoints are"
+    - url: sources/linkedin_resources/free_resources/stanford-free-ai-education-youtube.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Semantic analysis, dialogue systems, language meaning"
+    - url: sources/linkedin_resources/free_resources/sumon-kabir-prompt-engineering.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Hands-On Prompt Engineering for AI Beginners & Business Users"
+    - url: https://github.com/microsoft/generative-ai-for-beginners
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Get Started Building with Generative AI"
+    - url: https://www.anthropic.com/claude
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "think through your hardest work"
+  related_gaps: []
+  prerequisites: [ai-fluency/foundation-vs-finetuned]
+  challenge_types: [concept-recall, scenario]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 9 primary, 14 secondary, 28 tertiary
+  # critic: stability-recency: stability: foundational
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/transformer-architecture-basics
+  gap: AI technical fluency
+  concept: "Transformers, attention mechanism, and token processing"
+  difficulty: medium
+  source:
+    - url: sources/GenerativeAICourse/lessons/03_LLMs_deepdive.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "LLMs are based on the transformer architecture"
+    - url: sources/GenerativeAICourse/lessons/03_LLMs_deepdive.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Transformer architecture removed RNNs"
+    - url: sources/GenerativeAICourse/lessons/03_LLMs_deepdive.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "A transformer is an architecture that processes input tokens in parallel and generates output tokens sequentially"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "arxiv-attention-is-all-you-need.url  ← Transformer architecture (foundational)"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "transformer architecture, embeddings, RAG, fine-tuning, production"
+    - url: https://www.linkedin.com/posts/pawel-huryn_900k-total-for-ai-pms-at-openai-meta-share-7435020927710658560-OY59
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Neural Networks, Transformers, and LLMs"
+    - url: https://www.linkedin.com/posts/drbartpm_productmanagement-productmanager-freecourses-share-7439645289273262081-nNd7
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Decoder Architecture: https://www.cloudskillsboost.google/course_templates/543"
+    - url: https://www.linkedin.com/posts/aagupta_aipm-productmanagement-share-7486141182243405824-VljE
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "You want to go deeper than just \"Attention is all you need.\" Understand the intricacies of how the tech works."
+    - url: sources/linkedin_resources/ai_pm_skills/12-month-ai-pm-technical-plan.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Transformers and BERT Models"
+    - url: https://www.latent.space
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "The AI Engineer newsletter + Top technical AI podcast"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-resources-6-categories.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Instead, read about Transformers, and LLMs"
+    - url: https://bit.ly/3EZtCLs
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "how transformers and LLMs actually work — explained without math"
+    - url: https://bit.ly/pcprompts
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Introduction to AI Product Management: Neural Networks, Transformers, and LLMs"
+    - url: https://bit.ly/pcfinetune
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Introduction to AI Product Management: Neural Networks, Transformers, and LLMs"
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Introduction to AI Product Management: Neural Networks, Transformers, and LLMs"
+    - url: sources/linkedin_resources/ai_pm_skills/top-5-ai-pm-skills-from-200-jds.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Neural Networks, Transformers, and LLMs"
+    - url: sources/linkedin_resources/career_advice/pawel-huryn-ai-salaries.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Neural Networks, Transformers, and LLMs"
+    - url: sources/linkedin_resources/free_resources/jay-alammar-llm-repo-6-months-saved.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Transformer architecture explained"
+    - url: sources/linkedin_resources/free_resources/perfect-ai-roadmap-one-repo.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Illustrated Transformer explained"
+    - url: https://lnkd.in/gy6yRDQ7
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Understanding Large Language Models"
+    - url: sources/linkedin_resources/free_resources/stanford-free-ai-education-youtube.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Transformers, embeddings, and modern NLP architectures"
+    - url: https://arxiv.org/abs/1706.03762
+      type: paper
+      accessed_at: 2026-08-01
+      anchor: "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely."
+    - url: https://openai.com/research/gpt-4
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "scaling up deep learning"
+  related_gaps: []
+  prerequisites: [ai-fluency/foundation-vs-finetuned]
+  challenge_types: [concept-recall, technical-deep-dive]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 5 primary, 7 secondary, 11 tertiary
+  # critic: stability-recency: stability: foundational
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/human-eval-vs-automated
+  gap: AI technical fluency
+  concept: "Choosing between human evaluation and automated metrics based on task characteristics, cost constraints, and accuracy requirements"
+  difficulty: medium
+  source:
+    - url: sources/GenerativeAICourse/lessons/17_evaluation.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "The gold standard but expensive. Use for: Subjective tasks (e.g., content quality)"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "evals & grounding"
+    - url: https://arxiv.org/abs/2203.02155
+      type: paper
+      accessed_at: 2026-08-01
+      anchor: "we collect a dataset of rankings of model outputs, which we use to further fine-tune this supervised model using reinforcement learning from human feedback"
+  related_gaps: []
+  prerequisites: [ai-fluency/llm-as-judge]
+  challenge_types: [scenario, concept-recall]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 3 primary, 0 secondary, 0 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/latency-aware-design
+  gap: AI technical fluency
+  concept: "Evaluating and optimizing system response times including average latency, percentile metrics, and behavior under load"
+  difficulty: medium
+  source:
+    - url: sources/GenerativeAICourse/lessons/17_evaluation.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Does the system respond quickly enough for your use case? Measure: Average response time, 95th percentile latency, Timeouts/errors under load"
+    - url: sources/GenerativeAICourse_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "AI engineering deals with larger models that require more compute - which means higher latency and different infrastructure needs"
+    - url: sources/agents-towards-production_README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Docker deployment, FastAPI endpoints"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "latency, cost/latency"
+    - url: sources/linkedin_resources/ai_pm_skills/20-github-repos-for-agentic-builders.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Code-first tutorials taking agents from prototype to enterprise deployment"
+    - url: sources/linkedin_resources/ai_pm_skills/9-step-ai-pm-learning-order.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Cost and latency"
+    - url: https://lnkd.in/ejugguHC
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "This layer determines whether your agent can actually DO things or just talk about doing things"
+    - url: sources/linkedin_resources/claude_code/chorouk-malmoum-claude-optimization.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "Parallel execution"
+    - url: sources/linkedin_resources/claude_code/maria-r-claude-code.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "Production deployment tools"
+    - url: sources/linkedin_resources/free_resources/microsoft-ai-agents-course.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Streaming responses"
+  related_gaps: []
+  prerequisites: [ai-fluency/inference-cost-economics]
+  challenge_types: [concept-recall, scenario]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 5 primary, 1 secondary, 4 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: borderline, kept in track per #11
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/reading-model-reports
+  gap: AI technical fluency
+  concept: "How to interpret GPT-4, Claude, and Gemini technical reports"
+  difficulty: medium
+  source:
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "openai-gpt4-report.url        ← GPT-4 technical report (training, evals, model card)"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "anthropic-claude.url          ← Claude model family (context, safety, tool use)"
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "google-gemini-report.url      ← Gemini (MoE, long context, multimodal)"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: report
+      accessed_at: 2026-08-01
+      anchor: "GPT-5.6 family analysis (Luna/Terra/Sol) — pricing, 1M context, agentic benchmarks, new API features"
+    - url: https://bit.ly/pcaiagents
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "How to read a GPT-4/Claude/Gemini report"
+    - url: sources/linkedin_resources/ai_pm_skills/ai-pm-technical-requirements-dissolving-line.md
+      type: pasted
+      accessed_at: 2026-08-01
+      anchor: "Understand model architecture tradeoffs"
+    - url: https://simonwillison.net/2026/Jul/9/gpt-5-6/
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "OpenAI's biggest benchmark claim concerns long-running agentic performance, with one benchmark showing all three models outperforming Claude Fable 5"
+  related_gaps: []
+  prerequisites: [ai-fluency/training-pipeline]
+  challenge_types: [concept-recall, scenario]
+  phase: 2  # parked: "how to read" skill, not a core concept — pick up in Phase 2
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 4 primary, 2 secondary, 1 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/reading-model-cards
+  gap: AI technical fluency
+  concept: "Interpreting model cards: performance, limitations, and safety flags"
+  difficulty: medium
+  source:
+    - url: sources/README.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "openai-gpt4-report.url        ← GPT-4 technical report (training, evals, model card)"
+    - url: sources/linkedin_resources/MASTER_INDEX.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "model cards"
+  related_gaps: []
+  prerequisites: [ai-fluency/training-pipeline]
+  challenge_types: [concept-recall, scenario]
+  phase: 2  # parked: "how to read" skill, not a core concept — pick up in Phase 2
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 2 primary, 0 secondary, 0 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by 0/10 JDs
+- id: ai-fluency/agents-and-mcp
+  gap: AI technical fluency
+  concept: "AI agents — LLMs as decision-making engines that take actions independently — and MCP (Model Context Protocol), the standardized communication layer that decouples agents from tools the way REST decoupled web frontends from databases"
+  difficulty: medium
+  source:
+    - url: sources/GenerativeAICourse/lessons/11_Agents.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "an AI agent is simply an application that uses an LLM as its decision making engine to execute actions independently. The key word is independently"
+    - url: sources/GenerativeAICourse/lessons/11_Agents.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "MCP (Model Context Protocol): You need agents to take actions, which means they have to communicate with other systems. MCP is like HTTP for AI agents — it provides a standardized way for agents to interact with different services and tools"
+    - url: sources/GenerativeAICourse/lessons/13_MCP.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "MCP is a communication protocol that standardizes how your AI applications interact with external tools and data sources."
+    - url: sources/GenerativeAICourse/lessons/13_MCP.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "Agent ↔ MCP Server ↔ Tools (decoupled, flexible)"
+    - url: sources/GenerativeAICourse/lessons/13_MCP.md
+      type: docs
+      accessed_at: 2026-08-01
+      anchor: "MCP for AI is like REST APIs for AI tools. It provides the same standardization and decoupling benefits that web APIs brought to web development."
+    - url: sources/linkedin_resources/ai_pm_skills/karpathy-agents-as-distribution-channel.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "The new distribution channel for software is agents. Agents don't browse your marketing site, watch your demo video, or click through your onboarding flow. They call your CLI. They hit your MCP server."
+    - url: sources/linkedin_resources/ai_pm_skills/karpathy-agents-as-distribution-channel.md
+      type: blog
+      accessed_at: 2026-08-01
+      anchor: "MCP went from zero to 97 million monthly SDK downloads in twelve months. 10,000+ active servers. OpenAI, Google DeepMind, Microsoft, and Cloudflare all adopted it."
+  related_gaps: []
+  prerequisites: [ai-fluency/prompting-techniques, ai-fluency/rag-fundamentals]
+  challenge_types: [concept-recall, scenario]
+  phase: 1
+  # critic: groundedness: anchor found in source
+  # critic: primary-citation: ≥1 primary source
+  # critic: tier-mix: 5 primary, 2 secondary, 0 tertiary
+  # critic: stability-recency: stability: evolving
+  # critic: scope: technical-fluency literacy
+  # critic: reference-framework: covered by interview-guidance Category 2 (agents/MCP); 0/10 JDs name explicitly
