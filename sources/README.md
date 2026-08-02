@@ -23,31 +23,41 @@ sources/
 │   ├── google-gemini-report.url      ← Gemini (MoE, long context, multimodal)
 │   ├── arxiv-attention-is-all-you-need.url  ← Transformer architecture (foundational)
 │   └── arxiv-rlhf-instructgpt.url    ← RLHF paper (alignment, training pipeline)
-├── GenerativeAICourse/              ← 14 lesson .md files (LLMs, RAG, agents, evals, LLMOps)
-├── agents-towards-production/        ← README only (notebooks removed — not agent-ingestible)
-├── linkedin_resources/               ← LinkedIn saves, organized by category + MASTER_INDEX.md
-│   ├── ai_pm_skills/
-│   ├── career_advice/
-│   ├── claude_code/
-│   ├── free_resources/
-│   └── github_repos/                 ← .md files (NOTE: 3 have placeholder URLs — fill in real repos)
+├── GenerativeAICourse/              ← 13 lesson .md files (LLMs, RAG, agents, evals, LLMOps)
+│   └── lessons/                      ← 01_intro through 21_future
+├── GenerativeAICourse_README.md      ← Course README (fetched from GitHub)
+├── agents-towards-production_README.md ← 28-tutorial agents repo README (fetched from GitHub)
+├── karpathy-llm-wiki.md              ← Karpathy's LLM Wiki idea doc (primary for concept node #10)
+├── linkedin_resources/               ← 35 files: LinkedIn saves organized by category
+│   ├── MASTER_INDEX.md               ← Full index with status, fetchability, duplication notes
+│   ├── ai_pm_skills/                 ← 15 files (full content): learning paths, glossary, skills, interviews
+│   ├── career_advice/                ← 3 files: salary benchmarks, interview ranking, 90-day plan
+│   ├── claude_code/                  ← 4 files: Claude Code OS, learning doc, optimization
+│   ├── free_resources/               ← 10 files: Stanford courses, Anthropic courses, GitHub repos, Simon Willison
+│   └── github_repos/                  ← 3 .url pointers (GenerativeAI, Microsoft, agents-towards-production)
 ├── AI PM Knowledge Store & Deep Multi-Hop Extraction Plan.md  ← synthesis doc (secondary — pointer layer)
 └── reference-framework-inputs/       ← AI PM JDs + interview questions (NOT ingested as concepts)
+    ├── ai_pm_jobs/                   ← 10 AI PM JDs (Apple, DeepMind, IBM, Intel, Meta, NVIDIA, OpenAI, Salesforce, Tesla, Uber)
+    ├── ai-pm-interview-guidance.md   ← 8 categories of technical AI PM interview questions
+    └── README.md
 ```
 
 ### Tier mix (per #11's decisions)
 
 - **Primary** (`primary/`): 5 sources — Anthropic, OpenAI, Google DeepMind docs/reports + 2 foundational arXiv papers. Every concept node must cite ≥1 of these.
-- **Secondary** (`GenerativeAICourse/`, `agents-towards-production/README.md`, synthesis doc): practitioner-authored course material and synthesis. Supplements primary, never sole citation.
-- **Tertiary** (`linkedin_resources/`): LinkedIn posts pointing at primary sources. Recorded as provenance, not as citations.
-- **Reference framework** (`reference-framework-inputs/`): JDs + interview questions. NOT ingested as concepts — the critic cross-checks against these for completeness gaps.
+- **Secondary** (`GenerativeAICourse/`, `agents-towards-production_README.md`, `karpathy-llm-wiki.md`, `simon-willison-gpt5-family.md`, synthesis doc): practitioner-authored course material, blog analysis, and synthesis. Supplements primary, never sole citation.
+- **Tertiary** (`linkedin_resources/`): 35 LinkedIn posts organized by category. Points at primary sources. Recorded as provenance, not as citations.
+- **Reference framework** (`reference-framework-inputs/`): 10 JDs + interview questions. NOT ingested as concepts — the critic cross-checks against these for completeness gaps.
 
 ### Known gaps
 
-All previously identified gaps are closed (2026-07-26):
-- ✅ GitHub repo references now point to real repos (GenerativeAICourse, Microsoft generative-ai-for-beginners, NirDiamant/agents-towards-production).
+All previously identified gaps are closed (2026-08-01):
+- ✅ GitHub repo references point to real repos (GenerativeAICourse, Microsoft generative-ai-for-beginners, NirDiamant/agents-towards-production).
 - ✅ Karpathy LLM Wiki gist saved locally as `karpathy-llm-wiki.md` (primary source for concept node #10).
-- ✅ Practitioner blog post added (Simon Willison on GPT-5.6 family — secondary source for model reports, context windows, cost economics).
+- ✅ Simon Willison GPT-5.6 analysis fetched and saved as full `.md` (secondary source for model reports, context windows, cost economics).
+- ✅ LinkedIn resources expanded from 12 stubs to 35 files (30 full content, 3 stubs, 3 .url pointers) — see `linkedin_resources/MASTER_INDEX.md` for the full index.
+- ✅ Duplicate files removed (`AI_Agentic_Builder.md`, `Stub_files.md`, 2 replaced stubs).
+- ✅ Nested `agents-towards-production/` stub folder removed — real content is in root-level `agents-towards-production_README.md`.
 
 The corpus is ready for the ingestion agent.
 
