@@ -134,6 +134,71 @@ class TestExtractLinks:
         links = extract_links(text)
         assert links == []
 
+    def test_strips_html_attribute_artifacts(self):
+        """Trailing \", >, /> from HTML attributes should be stripped."""
+        text = 'href="https://example.com/page"> and href="https://example.com/other"/>'
+        links = extract_links(text)
+        assert "https://example.com/page" in links
+        assert "https://example.com/other" in links
+        # No URL should have trailing artifacts
+        for link in links:
+            assert not link.endswith((">", '"', "/", "'"))
+
+    def test_skips_non_content_extensions(self):
+        """CSS, JS, image, and font URLs should be filtered out."""
+        text = """
+        [style](https://example.com/assets/main.css)
+        [script](https://example.com/assets/app.js)
+        [image](https://example.com/img/photo.jpg)
+        [icon](https://example.com/favicon.ico)
+        [font](https://example.com/fonts/inter.woff2)
+        [svg](https://example.com/logo.svg)
+        [content](https://example.com/blog/post)
+        """
+        links = extract_links(text)
+        assert "https://example.com/blog/post" in links
+        assert not any(".css" in link for link in links)
+        assert not any(".js" in link for link in links)
+        assert not any(".jpg" in link for link in links)
+        assert not any(".ico" in link for link in links)
+        assert not any(".woff2" in link for link in links)
+        assert not any(".svg" in link for link in links)
+
+    def test_skips_asset_hosts(self):
+        """Known CDN/infrastructure hosts should be filtered out."""
+        text = """
+        [avatar](https://avatars.githubusercontent.com/u/123)
+        [asset](https://github.githubassets.com/assets/main.css)
+        [fonts](https://fonts.googleapis.com/css?family=Inter)
+        [gstatic](https://fonts.gstatic.com/s/inter/v12.woff2)
+        [cdn](https://cdn.prod.website-files.com/5f8b/image.jpg)
+        [s3](https://github-cloud.s3.amazonaws.com/user-attachments/123.png)
+        [content](https://example.com/article)
+        """
+        links = extract_links(text)
+        assert "https://example.com/article" in links
+        assert not any("avatars.githubusercontent" in link for link in links)
+        assert not any("githubassets" in link for link in links)
+        assert not any("fonts.googleapis" in link for link in links)
+        assert not any("fonts.gstatic" in link for link in links)
+        assert not any("cdn.prod.website-files" in link for link in links)
+        assert not any("github-cloud.s3" in link for link in links)
+
+    def test_skips_hreflang_alternates(self):
+        """Localized mirrors should be skipped when canonical is present."""
+        text = """
+        [canonical](https://openai.com/index/gpt-4-research/)
+        [arabic](https://openai.com/ar/index/gpt-4-research/)
+        [bulgarian](https://openai.com/bg-BG/index/gpt-4-research/)
+        [french](https://openai.com/fr/index/gpt-4-research/)
+        """
+        links = extract_links(text)
+        assert "https://openai.com/index/gpt-4-research/" in links
+        # hreflang alternates should be filtered out
+        assert not any("/ar/" in link for link in links)
+        assert not any("/bg-BG/" in link for link in links)
+        assert not any("/fr/" in link for link in links)
+
 
 class TestFetchGithubReadme:
     @patch("ingestion_agent.fetcher.subprocess.run")
