@@ -79,7 +79,8 @@ async def on_today(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Persist the challenge so /answer can reference it.
     challenge_id = store.save_challenge(
         lesson.concept_node_id, lesson.challenge_type, lesson.challenge,
-        json.dumps({"pm_concept": lesson.pm_concept, "ai_concept": lesson.ai_concept}),
+        json.dumps({"pm_concept": lesson.pm_concept,
+                   "ai_concept": lesson.ai_concept}),
         dt.datetime.now(TZ),
     )
     context.bot_data["current_challenge_id"] = challenge_id
@@ -149,7 +150,8 @@ async def on_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     lines.append(f"SR: {signals.sr_re_asks} re-asks, "
                  f"{signals.sr_second_encounter_passes} second-encounter passes")
     if signals.fairness_pass is None:
-        lines.append(f"Fairness: inconclusive ({signals.fairness_dispute_count} disputes)")
+        lines.append(
+            f"Fairness: inconclusive ({signals.fairness_dispute_count} disputes)")
     else:
         lines.append(f"Fairness: {'pass' if signals.fairness_pass else 'fail'} "
                      f"({signals.fairness_dispute_count} disputes, "
@@ -165,7 +167,8 @@ async def on_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if challenge and challenge.get("answered_at"):
         row = store.get_latest_grade_for_challenge(challenge["id"])
         if row:
-            lines.append(f"\nLatest grade: {row['band']} (score {row['score']})")
+            lines.append(
+                f"\nLatest grade: {row['band']} (score {row['score']})")
             lines.append(f"Feedback: {row['feedback']}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
@@ -262,7 +265,8 @@ def _update_sr(store: Store, concept_node_id: str, band: GradeBand, today) -> No
             repetitions=raw["repetitions"],
             due_date=date.fromisoformat(raw["due_date"]),
             difficulty=Difficulty(raw["difficulty"]),
-            last_grade_band=GradeBand(raw["last_grade_band"]) if raw["last_grade_band"] else None,
+            last_grade_band=GradeBand(
+                raw["last_grade_band"]) if raw["last_grade_band"] else None,
         )
     new_state = process_grade(state, band, today)
     store.upsert_sr_state(
@@ -386,6 +390,14 @@ def build_app() -> Application:
     app.add_handler(CommandHandler("explain", on_explain, filters=owner_only))
     app.add_handler(CommandHandler("dispute", on_dispute, filters=owner_only))
     app.add_error_handler(on_error)
+
+    # Fail fast if JobQueue is not available (missing [job-queue] extra).
+    if app.job_queue is None:
+        raise RuntimeError(
+            "JobQueue is not available. Install the job-queue extra:\n"
+            '  pip install "python-telegram-bot[job-queue]"\n'
+            "The scheduled push (7am) and grade (11pm) jobs require it."
+        )
 
     # 7am Pacific push job — skip-if-asleep (JobQueue default: no catch-up).
     app.job_queue.run_daily(
