@@ -88,6 +88,50 @@ class TestGradeRoundTrip:
         latest = store.get_latest_grade(aid)
         assert latest["band"] == "meets"
 
+    def test_get_latest_grade_overall_returns_most_recent(self, store):
+        """get_latest_grade_overall returns the most recent non-deferred grade
+        across ALL answers — not filtered by answer_id. Needed for /stats (#41)."""
+        cid1 = store.save_challenge("a", ChallengeType.SCENARIO, "q1", "{}",
+                                    datetime(2026, 8, 1, 7))
+        aid1 = store.save_answer(cid1, "ans1", datetime(2026, 8, 1, 12))
+        store.save_grade(aid1, ModelName.SONNET, GradeBand.MEETS, 2,
+                         "first grade", "scenario", datetime(2026, 8, 1, 23))
+        cid2 = store.save_challenge("b", ChallengeType.CONCEPT_RECALL, "q2", "{}",
+                                    datetime(2026, 8, 2, 7))
+        aid2 = store.save_answer(cid2, "ans2", datetime(2026, 8, 2, 12))
+        store.save_grade(aid2, ModelName.SONNET, GradeBand.EXCEEDS, 3,
+                         "second grade", "concept-recall",
+                         datetime(2026, 8, 2, 23))
+        latest = store.get_latest_grade_overall()
+        assert latest is not None
+        assert latest["feedback"] == "second grade"
+
+    def test_get_latest_grade_overall_skips_deferred(self, store):
+        """get_latest_grade_overall skips deferred grades (#6 flag-and-defer)."""
+        cid = store.save_challenge("a", ChallengeType.SCENARIO, "q1", "{}",
+                                   datetime(2026, 8, 1, 7))
+        aid = store.save_answer(cid, "ans", datetime(2026, 8, 1, 12))
+        store.save_grade(aid, ModelName.SONNET, GradeBand.BELOW, 0,
+                         "deferred", "scenario", datetime(2026, 8, 1, 23),
+                         is_deferred=True)
+        latest = store.get_latest_grade_overall()
+        assert latest is None
+
+    def test_get_latest_grade_overall_returns_none_when_empty(self, store):
+        assert store.get_latest_grade_overall() is None
+
+    def test_get_latest_grade_overall_skips_critic_grade(self, store):
+        """get_latest_grade_overall skips critic grades even if non-deferred
+        (defense in depth — the critic re-grades; only the grader's resolved
+        grade is user-facing)."""
+        cid = store.save_challenge("a", ChallengeType.SCENARIO, "q1", "{}",
+                                   datetime(2026, 8, 1, 7))
+        aid = store.save_answer(cid, "ans", datetime(2026, 8, 1, 12))
+        store.save_grade(aid, ModelName.SONNET, GradeBand.BELOW, 0,
+                         "critic says fail", "scenario", datetime(2026, 8, 1, 23),
+                         is_critic=True, is_deferred=False)
+        assert store.get_latest_grade_overall() is None
+
 
 class TestSRState:
     def test_upsert_and_get_sr_state(self, store):

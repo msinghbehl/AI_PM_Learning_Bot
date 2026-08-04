@@ -200,6 +200,127 @@ class TestPushJob:
         assert "Today's Lesson" in text
         assert context.bot_data["current_lesson"] is lesson
 
+    @pytest.mark.asyncio
+    async def test_push_job_includes_yesterday_grade_when_available(
+        self, _reload_config, tmp_path
+    ):
+        """7am push sends grade result as a separate message before the lesson (#42)."""
+        from coach.bot import on_push_job
+        from coach.lesson import Lesson
+        from coach.store import Store, init_db
+        from coach.config import GradeBand, ModelName
+
+        store = Store(init_db(tmp_path / "test.db"))
+        # Yesterday's challenge, answered, graded
+        cid = store.save_challenge("a", ChallengeType.SCENARIO, "q1", "{}",
+                                    datetime(2026, 8, 1, 7))
+        aid = store.save_answer(cid, "ans", datetime(2026, 8, 1, 12))
+        store.save_grade(aid, ModelName.SONNET, GradeBand.MEETS, 2,
+                         "Good understanding of RAG tradeoffs",
+                         "scenario", datetime(2026, 8, 1, 23))
+
+        lesson = Lesson(
+            pm_concept="p", ai_concept="a", challenge="c",
+            challenge_type=ChallengeType.TECHNICAL_DEEP_DIVE,
+            concept_node_id="ai-fluency/test", concept_gap="AI technical fluency",
+            concept_source=[],
+        )
+        context = MagicMock()
+        context.bot_data = {"lesson_generator": MagicMock(), "store": store}
+        context.bot_data["lesson_generator"].generate.return_value = lesson
+        context.bot.send_message = AsyncMock()
+
+        await on_push_job(context)
+
+        # Two messages: grade result + lesson
+        assert context.bot.send_message.call_count == 2
+        grade_text = context.bot.send_message.call_args_list[0][1]["text"]
+        lesson_text = context.bot.send_message.call_args_list[1][1]["text"]
+        assert "Result from" in grade_text
+        assert "meets" in grade_text.lower() or "Good understanding" in grade_text
+        assert "Today's Lesson" in lesson_text
+
+    @pytest.mark.asyncio
+    async def test_push_job_no_grade_message_when_no_prior_grade(
+        self, _reload_config, tmp_path
+    ):
+        """7am push sends only the lesson when no prior grade exists (#42)."""
+        from coach.bot import on_push_job
+        from coach.lesson import Lesson
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        lesson = Lesson(
+            pm_concept="p", ai_concept="a", challenge="c",
+            challenge_type=ChallengeType.TECHNICAL_DEEP_DIVE,
+            concept_node_id="ai-fluency/test", concept_gap="AI technical fluency",
+            concept_source=[],
+        )
+        context = MagicMock()
+        context.bot_data = {"lesson_generator": MagicMock(), "store": store}
+        context.bot_data["lesson_generator"].generate.return_value = lesson
+        context.bot.send_message = AsyncMock()
+
+        await on_push_job(context)
+
+        # Only the lesson message, no grade message
+        assert context.bot.send_message.call_count == 1
+        text = context.bot.send_message.call_args[1]["text"]
+        assert "Today's Lesson" in text
+        assert "Result from" not in text
+
+
+class TestStatsHandler:
+    @pytest.mark.asyncio
+    async def test_stats_shows_latest_grade_when_one_exists(
+        self, _reload_config, tmp_path
+    ):
+        """/stats shows the most recent grade + feedback across all challenges (#41)."""
+        from coach.bot import on_stats
+        from coach.store import Store, init_db
+        from coach.config import GradeBand, ModelName
+
+        store = Store(init_db(tmp_path / "test.db"))
+        # Day 1 challenge, answered, graded
+        cid1 = store.save_challenge("a", ChallengeType.SCENARIO, "q1", "{}",
+                                    datetime(2026, 8, 1, 7))
+        aid1 = store.save_answer(cid1, "ans1", datetime(2026, 8, 1, 12))
+        store.save_grade(aid1, ModelName.SONNET, GradeBand.MEETS, 2,
+                         "Good grasp of RAG fundamentals",
+                         "scenario", datetime(2026, 8, 1, 23))
+        # Day 2 challenge, answered, NOT yet graded (current)
+        cid2 = store.save_challenge("b", ChallengeType.CONCEPT_RECALL, "q2", "{}",
+                                    datetime(2026, 8, 2, 7))
+        store.save_answer(cid2, "ans2", datetime(2026, 8, 2, 12))
+
+        update = _make_update("/stats")
+        context = MagicMock()
+        context.bot_data = {"store": store}
+
+        await on_stats(update, context)
+
+        reply = update.message.reply_text.call_args[0][0]
+        assert "meets" in reply.lower() or "Good grasp" in reply
+
+    @pytest.mark.asyncio
+    async def test_stats_no_grade_line_when_no_grades(
+        self, _reload_config, tmp_path
+    ):
+        """/stats doesn't show a grade section when no grades exist yet (#41)."""
+        from coach.bot import on_stats
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        update = _make_update("/stats")
+        context = MagicMock()
+        context.bot_data = {"store": store}
+
+        await on_stats(update, context)
+
+        reply = update.message.reply_text.call_args[0][0]
+        assert "Latest grade" not in reply
+        assert "Feedback" not in reply
+
 
 class TestAnswerHandler:
     @pytest.mark.asyncio
