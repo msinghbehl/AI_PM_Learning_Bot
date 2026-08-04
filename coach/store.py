@@ -231,6 +231,21 @@ class Store:
         ).fetchone()
         return dict(row) if row else None
 
+    def get_latest_grade_overall(self) -> dict[str, Any] | None:
+        """Return the most recent resolved (non-deferred, non-critic) grade
+        across all answers.
+
+        Used by /stats (#41) and the 7am push (#42) to show the user's latest
+        grade regardless of which challenge it belongs to. Skips deferred grades
+        (flag-and-defer, #6) and critic grades (the critic re-grades; only the
+        grader's resolved grade is the user-facing assessment).
+        """
+        row = self._conn.execute(
+            "SELECT * FROM grades WHERE is_deferred = 0 AND is_critic = 0 "
+            "ORDER BY graded_at DESC LIMIT 1"
+        ).fetchone()
+        return dict(row) if row else None
+
     def get_latest_deferred_grade(self) -> dict[str, Any] | None:
         """Return the most recent deferred grade with its answer/challenge context."""
         row = self._conn.execute(

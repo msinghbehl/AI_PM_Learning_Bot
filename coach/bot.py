@@ -90,6 +90,9 @@ async def on_today(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def on_push_job(context: ContextTypes.DEFAULT_TYPE) -> None:
     """Scheduled 7am push job — generates and sends the daily lesson.
 
+    Prepends yesterday's grade + feedback if available (#42 — closes the
+    feedback loop at the moment the user is already engaging).
+
     Skip-if-asleep is handled by JobQueue: if the Mac is asleep at fire time,
     the job is skipped with no catch-up (run_daily default behavior).
     """
@@ -105,11 +108,38 @@ async def on_push_job(context: ContextTypes.DEFAULT_TYPE) -> None:
         dt.datetime.now(TZ),
     )
     context.bot_data["current_challenge_id"] = challenge_id
-    await context.bot.send_message(
-        chat_id=config.owner_id(),
-        text=_format_lesson(lesson),
-        parse_mode="Markdown",
-    )
+
+    # Send grade result as a separate message if available (#42).
+    # Separate message avoids 4096-char limit and Markdown parse failures
+    # in the lesson message. Uses the actual graded_at date, not "Yesterday"
+    # (the grade could be from 2+ days ago if the Mac was asleep, #9).
+    grade_row = store.get_latest_grade_overall()
+    if grade_row:
+        graded_date = grade_row["graded_at"][:10]  # ISO date prefix
+        grade_text = (
+            f"📋 **Result from {graded_date}**\n"
+            f"Grade: {grade_row['band']} (score {grade_row['score']})\n"
+            f"Feedback: {grade_row['feedback']}"
+        )
+        await _safe_send(context.bot, chat_id=config.owner_id(),
+                         text=grade_text, parse_mode="Markdown")
+
+    # Send the lesson as its own message
+    await _safe_send(context.bot, chat_id=config.owner_id(),
+                     text=_format_lesson(lesson), parse_mode="Markdown")
+
+
+async def _safe_send(bot, chat_id: int, text: str, parse_mode: str | None = None) -> None:
+    """Send a message, falling back to plain text if Markdown parsing fails.
+
+    LLM-generated feedback can contain unmatched Markdown chars that cause
+    Telegram to reject the message. This wrapper retries without parse_mode
+    so the message always lands (adversarial review HIGH finding).
+    """
+    try:
+        await bot.send_message(chat_id=chat_id, text=text, parse_mode=parse_mode)
+    except Exception:
+        await bot.send_message(chat_id=chat_id, text=text)
 
 
 async def on_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -131,8 +161,8 @@ async def on_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     store.save_answer(challenge["id"], answer_text, dt.datetime.now(TZ))
     await update.message.reply_text(
-        "✅ Answer recorded. I'll grade it tonight and you'll see the result "
-        "in /stats tomorrow."
+        "✅ Answer recorded. I'll grade it tonight — you'll see the result in "
+        "tomorrow morning's push and in /stats."
     )
 
 
@@ -162,14 +192,12 @@ async def on_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if signals.fix_and_extend:
         lines.append(f"\n🔧 Fix-and-extend: {signals.fix_and_extend_reason}")
 
-    # Show latest grade if available
-    challenge = store.get_current_challenge()
-    if challenge and challenge.get("answered_at"):
-        row = store.get_latest_grade_for_challenge(challenge["id"])
-        if row:
-            lines.append(
-                f"\nLatest grade: {row['band']} (score {row['score']})")
-            lines.append(f"Feedback: {row['feedback']}")
+    # Show latest grade if available (#41 — across all challenges, not just current)
+    grade_row = store.get_latest_grade_overall()
+    if grade_row:
+        lines.append(
+            f"\nLatest grade: {grade_row['band']} (score {grade_row['score']})")
+        lines.append(f"Feedback: {grade_row['feedback']}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
 
