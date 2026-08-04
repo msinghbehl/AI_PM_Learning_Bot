@@ -160,6 +160,14 @@ async def on_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
 
     store.save_answer(challenge["id"], answer_text, dt.datetime.now(TZ))
+
+    # Start the Phase 1 validation clock on the first answer (#8 — clock
+    # starts day 1 at first answered challenge). Without this, /stats shows
+    # 0/10 forever because compute_signals returns early when clock_started
+    # is unset.
+    if store.get_meta("clock_started") is None:
+        store.set_meta("clock_started", _local_today().isoformat())
+
     await update.message.reply_text(
         "✅ Answer recorded. I'll grade it tonight — you'll see the result in "
         "tomorrow morning's push and in /stats."
