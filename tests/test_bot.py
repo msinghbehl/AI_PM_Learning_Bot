@@ -213,7 +213,7 @@ class TestPushJob:
         store = Store(init_db(tmp_path / "test.db"))
         # Yesterday's challenge, answered, graded
         cid = store.save_challenge("a", ChallengeType.SCENARIO, "q1", "{}",
-                                    datetime(2026, 8, 1, 7))
+                                   datetime(2026, 8, 1, 7))
         aid = store.save_answer(cid, "ans", datetime(2026, 8, 1, 12))
         store.save_grade(aid, ModelName.SONNET, GradeBand.MEETS, 2,
                          "Good understanding of RAG tradeoffs",
@@ -376,6 +376,63 @@ class TestAnswerHandler:
         await on_answer(update, context)
         reply = update.message.reply_text.call_args[0][0]
         assert "Usage" in reply
+
+    @pytest.mark.asyncio
+    async def test_answer_starts_clock_on_first_answer(
+        self, _reload_config, tmp_path
+    ):
+        """First answer sets clock_started meta (#8 — clock starts day 1 at
+        first answered challenge). Without this, /stats shows 0/10 forever."""
+        from coach.bot import on_answer, _local_today
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "q", "{}",
+                             datetime(2026, 8, 1, 7))
+        assert store.get_meta("clock_started") is None
+
+        update = _make_update("/answer my response")
+        context = MagicMock()
+        context.bot_data = {"store": store}
+        context.args = ["my", "response"]
+
+        await on_answer(update, context)
+
+        clock = store.get_meta("clock_started")
+        assert clock is not None
+        assert clock == _local_today().isoformat()
+
+    @pytest.mark.asyncio
+    async def test_answer_does_not_overwrite_clock_on_subsequent_answers(
+        self, _reload_config, tmp_path
+    ):
+        """Clock is set once on first answer; later answers don't move it (#8)."""
+        from coach.bot import on_answer
+        from coach.store import Store, init_db
+
+        store = Store(init_db(tmp_path / "test.db"))
+        # Day 1 challenge + answer
+        cid1 = store.save_challenge("a", ChallengeType.CONCEPT_RECALL, "q1", "{}",
+                                    datetime(2026, 8, 1, 7))
+        update1 = _make_update("/answer first")
+        context = MagicMock()
+        context.bot_data = {"store": store}
+        context.args = ["first"]
+        await on_answer(update1, context)
+        first_clock = store.get_meta("clock_started")
+        assert first_clock is not None
+
+        # Day 2 challenge + answer
+        cid2 = store.save_challenge("b", ChallengeType.SCENARIO, "q2", "{}",
+                                    datetime(2026, 8, 2, 7))
+        update2 = _make_update("/answer second")
+        context2 = MagicMock()
+        context2.bot_data = {"store": store}
+        context2.args = ["second"]
+        await on_answer(update2, context)
+
+        # Clock still points to the first answer's date
+        assert store.get_meta("clock_started") == first_clock
 
 
 class TestExplainHandler:

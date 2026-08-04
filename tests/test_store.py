@@ -128,7 +128,8 @@ class TestGradeRoundTrip:
                                    datetime(2026, 8, 1, 7))
         aid = store.save_answer(cid, "ans", datetime(2026, 8, 1, 12))
         store.save_grade(aid, ModelName.SONNET, GradeBand.BELOW, 0,
-                         "critic says fail", "scenario", datetime(2026, 8, 1, 23),
+                         "critic says fail", "scenario", datetime(
+                             2026, 8, 1, 23),
                          is_critic=True, is_deferred=False)
         assert store.get_latest_grade_overall() is None
 
